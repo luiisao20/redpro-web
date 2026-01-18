@@ -1,0 +1,25 @@
+@import url(./normalize.css);
+@import "tailwindcss";
+
+@theme {
+  --color-text: #11181c;
+  --color-background: #fff;
+  --color-icon: #687076;
+  --color-tabIconDefault: #687076;
+  --color-tint: #8e8e93;
+  --color-gray: #6e6c6c;
+  --color-bgGray: #edecee;
+  --color-buttonDark: #24514f;
+  --color-buttonLight: #f5f7fa;
+  --color-link: #e02827;
+  --color-lightGreen: #d2f1e1;
+  --color-textGreen: #24514f;
+  --color-tabs: #00524f;
+  --color-pointsGreen: #05a044;
+  --color-orange: #f57f14;
+}
+
+body {
+  background-color: var(--color-background);
+  font-family: "Bagoss";
+}
