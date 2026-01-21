@@ -6,6 +6,11 @@ import { InitScreen } from "./views/InitScreen";
 import { LoginScreen } from "./views/LoginScreen";
 import { WelcomeScreen } from "./views/WelcomeScreen";
 import { RegisterScreen } from "./views/RegisterScreen";
+import { DashboardIndex } from "./views/dashboard";
+import { DashHome } from "./views/dashboard/DashHome";
+import { DashChallenge } from "./views/dashboard/DashChallenge";
+import { DashRewards } from "./views/dashboard/DashRewards";
+import { DashShop } from "./views/dashboard/DashShop";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +23,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="welcome" element={<WelcomeScreen />} />
           <Route path="login" element={<LoginScreen />} />
           <Route path="register" element={<RegisterScreen />} />
+          <Route path="dashboard" element={<DashboardIndex />}>
+            <Route path="home" element={<DashHome />} />
+            <Route path="challenges" element={<DashChallenge />} />
+            <Route path="rewards" element={<DashRewards />} />
+            <Route path="shop" element={<DashShop />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -3,3 +3,41 @@ export interface Onboarding {
   description: string;
   image: string;
 }
+
+export interface Sku {
+  id: string;
+  name: string;
+  url: string;
+}
+
+export interface Challenge {
+  id: number;
+  name: string;
+  description: string;
+  leftDays: number;
+  points: string | number;
+  startDate?: string;
+  endDate?: string;
+  type?: string;
+  status?: boolean;
+  image?: string;
+  url?: string;
+  products?: Sku[];
+  isAccepted?: boolean;
+}
+
+export interface Banner {
+  id: number;
+  url: string;
+  title: string;
+}
+
+export interface Product {
+  id: number;
+  sku?: string;
+  name: string;
+  description: string;
+  points: number;
+  url?: string;
+  status?: boolean;
+}

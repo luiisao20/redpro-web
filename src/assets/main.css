@@ -17,9 +17,19 @@
   --color-tabs: #00524f;
   --color-pointsGreen: #05a044;
   --color-orange: #f57f14;
+  --color-dotStyle: #a0f2e7;
 }
 
 body {
   background-color: var(--color-background);
   font-family: "Bagoss";
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

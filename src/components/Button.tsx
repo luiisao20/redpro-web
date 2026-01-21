@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes } from "react";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "light" | "cancel" | "white" | "red" | "orange";
@@ -29,7 +30,7 @@ export const Button = ({
 
   return (
     <button
-      className={`py-4 rounded-xl w-full ${variantClass}`}
+      className={`py-4 rounded-xl w-full cursor-pointer hover:opacity-60 ${variantClass} ${loading && "cursor-progress"}`}
       disabled={loading}
       {...rest}
     >
@@ -38,6 +39,19 @@ export const Button = ({
       >
         {loading ? "Loading..." : text}
       </p>
+    </button>
+  );
+};
+
+export const GoBackButton = ({
+  ...rest
+}: ButtonHTMLAttributes<HTMLButtonElement>) => {
+  return (
+    <button
+      {...rest}
+      className="hover:opacity-40 cursor-pointer place-self-start pl-10 py-8"
+    >
+      <IoArrowBackCircleOutline size={46} />
     </button>
   );
 };
