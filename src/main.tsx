@@ -11,6 +11,7 @@ import { DashHome } from "./views/dashboard/DashHome";
 import { DashChallenge } from "./views/dashboard/DashChallenge";
 import { DashRewards } from "./views/dashboard/DashRewards";
 import { DashShop } from "./views/dashboard/DashShop";
+import {OnboardingScreen} from "./views/OnboardingScreen";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="welcome" element={<WelcomeScreen />} />
           <Route path="login" element={<LoginScreen />} />
           <Route path="register" element={<RegisterScreen />} />
+          <Route path="onboarding" element={<OnboardingScreen />} />
           <Route path="dashboard" element={<DashboardIndex />}>
             <Route path="home" element={<DashHome />} />
             <Route path="challenges" element={<DashChallenge />} />

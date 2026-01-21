@@ -5,9 +5,10 @@ interface Props {
   children: ReactNode;
   hideDots?: boolean;
   width?: number;
+  id?: string;
 }
 
-export const Carousel = ({ data, children, hideDots, width }: Props) => {
+export const Carousel = ({ data, children, hideDots, width, id }: Props) => {
   const [index, setIndex] = useState(0);
 
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -24,7 +25,7 @@ export const Carousel = ({ data, children, hideDots, width }: Props) => {
   };
 
   return (
-    <>
+    <div id={id}>
       <div
         ref={carouselRef}
         onScroll={handleScroll}
@@ -50,6 +51,6 @@ export const Carousel = ({ data, children, hideDots, width }: Props) => {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 };

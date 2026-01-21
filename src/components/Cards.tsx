@@ -1,4 +1,4 @@
-import type { Banner, Challenge, Product } from "../interfaces/interface";
+import type { Banner, Challenge, News, Product } from "../interfaces/interface";
 import { FaCheck, FaLock } from "react-icons/fa";
 
 interface BannerComponent {
@@ -104,6 +104,32 @@ export const RewardCard = ({
         >
           Canjea aquí
         </button>
+      </div>
+    </div>
+  );
+};
+
+interface NewsComponent {
+  item: News;
+}
+
+export const NewsCard = ({ item }: NewsComponent) => {
+  const { id, description, image, subtitle, title } = item;
+  return (
+    <div className="bg-background rounded-2xl mr-4 shadow-md min-w-full flex px-4 items-center">
+      <img
+        src={image}
+        alt={title}
+        className="h-24 object-contain rounded-2xl"
+        loading="lazy"
+      />
+
+      <div className="p-2 flex flex-col items-center gap-2">
+        <h3 className="text-sm font-semibold capitalize">
+          {title}
+        </h3>
+        <p className="text-sm">{subtitle}</p>
+        <p className="text-xs font-thin line-clamp-2">{description}</p>
       </div>
     </div>
   );
