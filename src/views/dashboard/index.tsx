@@ -8,43 +8,43 @@ export const DashboardIndex = () => {
   return (
     <div>
       <Outlet />
-      <footer className="fixed flex justify-between px-10 bottom-0 left-0 z-20 w-full bg-buttonDark pt-6 pb-3">
+      <footer className="fixed flex justify-between px-6 bottom-0 left-0 z-20 w-full bg-buttonDark pt-4 pb-2">
         <NavLink
           to="/dashboard/home"
           className={({ isActive }) =>
-            `text-dotStyle flex flex-col items-center space-y-3 ${isActive && "text-white"}`
+            `text-dotStyle flex flex-col items-center space-y-2 ${isActive && "text-white"}`
           }
         >
-          <IoHome size={25} />
-          <p className="font-thin">Inicio</p>
+          <IoHome size={22} />
+          <p className="font-thin text-xs">Inicio</p>
         </NavLink>
         <NavLink
           to="/dashboard/challenges"
           className={({ isActive }) =>
-            `text-dotStyle flex flex-col items-center space-y-3 ${isActive && "text-white"}`
+            `text-dotStyle flex flex-col items-center space-y-2 ${isActive && "text-white"}`
           }
         >
-          <HiOutlineFire size={25} />
-          <p className="font-thin">Retos</p>
+          <HiOutlineFire size={22} />
+          <p className="font-thin text-xs">Retos</p>
         </NavLink>
 
         <NavLink
           to="/dashboard/rewards"
           className={({ isActive }) =>
-            `text-dotStyle flex flex-col items-center space-y-3 ${isActive && "text-white"}`
+            `text-dotStyle flex flex-col items-center space-y-2 ${isActive && "text-white"}`
           }
         >
-          <LuTicket size={25} />
-          <p className="font-thin">Canjear</p>
+          <LuTicket size={22} />
+          <p className="font-thin text-xs">Canjear</p>
         </NavLink>
         <NavLink
           to="/dashboard/shop"
           className={({ isActive }) =>
-            `text-dotStyle flex flex-col items-center space-y-3 ${isActive && "text-white"}`
+            `text-dotStyle flex flex-col items-center space-y-2 ${isActive && "text-white"}`
           }
         >
-          <PiShoppingCart size={25} />
-          <p className="font-thin">Comprar</p>
+          <PiShoppingCart size={22} />
+          <p className="font-thin text-xs">Comprar</p>
         </NavLink>
       </footer>
     </div>

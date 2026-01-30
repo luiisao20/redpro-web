@@ -35,9 +35,9 @@ export const Button = ({
       {...rest}
     >
       <p
-        className={`text-center font-regular text-xl ${variant === "default" || variant === "red" || variant === "orange" ? "text-white" : variant === "cancel" ? "text-link" : "text-text"}`}
+        className={`text-center font-regular text-base ${variant === "default" || variant === "red" || variant === "orange" ? "text-white" : variant === "cancel" ? "text-link" : "text-text"}`}
       >
-        {loading ? "Loading..." : text}
+        {loading ? "Cargando..." : text}
       </p>
     </button>
   );
@@ -49,7 +49,7 @@ export const GoBackButton = ({
   return (
     <button
       {...rest}
-      className="hover:opacity-40 cursor-pointer place-self-start pl-10 py-8"
+      className="hover:opacity-40 cursor-pointer place-self-start pl-4 pt-4"
     >
       <IoArrowBackCircleOutline size={46} />
     </button>

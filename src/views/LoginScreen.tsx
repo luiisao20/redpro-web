@@ -1,31 +1,71 @@
 import { Button, GoBackButton } from "../components/Button";
 import { useNavigate } from "react-router";
 import { InputComponent } from "../components/InputComponent";
+import { useState } from "react";
+import { useAuthStore } from "../presentation/core/useAuthStore";
+
+interface LoginData {
+  email: string;
+  password: string;
+}
 
 export const LoginScreen = () => {
   const navigate = useNavigate();
 
+  const [loginData, setLoginData] = useState<LoginData>({
+    email: "",
+    password: "",
+  });
+
+  const { login, loading } = useAuthStore();
+
+  const handleLogin = async () => {
+    if (loginData.email.trim() === "" || loginData.password.trim() === "") {
+      alert("Los campos estan vacios");
+      return;
+    }
+
+    const wasSuccessful = await login(loginData.email, loginData.password);
+
+    if (wasSuccessful) return navigate("/dashboard/home");
+  };
+
   return (
     <div className="relative grid place-items-center">
       <GoBackButton onClick={() => navigate(-1)} />
-      <div className="mx-10 flex flex-col gap-5">
-        <h2 className="text-4xl font-bold leading-10 ">
+      <div className="mx-6 flex flex-col gap-5">
+        <h2 className="text-3xl font-bold leading-10">
           Bienvenido. ¡Nos alegra verte de nuevo!
         </h2>
         <input
           type="text"
-          className="bg-buttonLight border-buttonLight w-full text-4xl h-15 mx-10 border rounded-xl pl-4"
-          placeholder="full-name@gmail.com"
+          className="bg-buttonLight border-buttonLight w-full text-2xl h-15 mx-10 border rounded-xl pl-4"
+          placeholder="Correo electrónico"
+          onChange={(e) =>
+            setLoginData((prev) => ({ ...prev, email: e.target.value }))
+          }
         />
-        <InputComponent />
-        <a className="text-link place-self-end hover:underline hover:underline-offset-2 mb-5 cursor-pointer">
+        <InputComponent
+          placeholder="Contraseña"
+          onChange={(e) =>
+            setLoginData((prev) => ({ ...prev, password: e.target.value }))
+          }
+        />
+        <a className="text-link text-sm place-self-end hover:underline hover:underline-offset-2 mb-3 cursor-pointer">
           ¿Olvidaste tu contraseña?
         </a>
-        <Button text="Iniciar sesión" onClick={() => navigate("/dashboard/home")} />
+        <Button
+          text="Iniciar sesión"
+          onClick={handleLogin}
+          disabled={loading}
+        />
       </div>
-      <p className="text-center my-8">
+      <p className="text-center my-8 text-sm">
         ¿No tienes cuenta?{" "}
-        <a className="text-link font-bold hover:underline hover:underline-offset-2 cursor-pointer">
+        <a
+          onClick={() => navigate("/register")}
+          className="text-link font-bold hover:underline hover:underline-offset-2 cursor-pointer"
+        >
           Regístrate aquí
         </a>
       </p>

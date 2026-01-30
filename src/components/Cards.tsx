@@ -11,7 +11,7 @@ export const BannerCard = ({ item }: BannerComponent) => {
       <img
         src={item.url}
         alt={item.title}
-        className="w-full h-40 object-cover rounded-xl shadow-md"
+        className="w-full h-32 object-cover rounded-xl shadow-md"
       />
     </div>
   );
@@ -23,12 +23,12 @@ interface ChallengeComponent {
 
 export const ChallengeCard = ({ item }: ChallengeComponent) => {
   return (
-    <div key={item.id} className="shadow-md min-w-64 rounded-xl mr-4">
+    <div key={item.id} className="shadow-md flex flex-col justify-between min-w-68 rounded-xl mr-4">
       <div className="p-4 flex flex-col space-y-2">
         <h2 className="font-semibold">{item.name}</h2>
         <p className="font-thin text-gray">{item.description}</p>
         <div className="flex gap-3 items-end">
-          <p className="text-buttonDark font-regular border border-gray text-sm px-2 rounded-xl">
+          <p className="text-buttonDark font-medium border border-gray text-sm px-2 rounded-xl">
             {item.points} Puntos
           </p>
           <p className="text-xs text-red-500">Te quedan {item.leftDays} dias</p>
@@ -52,7 +52,7 @@ export const RewardCard = ({
   canRedeem,
   disabledGo,
 }: RewardComponent) => {
-  const { id, url, name, points } = item;
+  const { url, name, points } = item;
   return (
     <div className="bg-background rounded-2xl mr-4 shadow-md min-w-40">
       <img
@@ -102,7 +102,7 @@ export const RewardCard = ({
             }
           `}
         >
-          Canjea aquí
+          <p className="text-xs">Canjea aquí</p>
         </button>
       </div>
     </div>
@@ -114,7 +114,7 @@ interface NewsComponent {
 }
 
 export const NewsCard = ({ item }: NewsComponent) => {
-  const { id, description, image, subtitle, title } = item;
+  const { description, image, subtitle, title } = item;
   return (
     <div className="bg-background rounded-2xl mr-4 shadow-md min-w-full flex px-4 items-center">
       <img
@@ -125,11 +125,9 @@ export const NewsCard = ({ item }: NewsComponent) => {
       />
 
       <div className="p-2 flex flex-col items-center gap-2">
-        <h3 className="text-sm font-semibold capitalize">
-          {title}
-        </h3>
-        <p className="text-sm">{subtitle}</p>
-        <p className="text-xs font-thin line-clamp-2">{description}</p>
+        <h3 className="text-[12px] font-semibold capitalize">{title}</h3>
+        <p className="text-[10px]">{subtitle}</p>
+        <p className="text-[10px] font-thin line-clamp-2">{description}</p>
       </div>
     </div>
   );

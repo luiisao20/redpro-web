@@ -1,0 +1,25 @@
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { getChallenges } from "../../core/database/userData/get-challenges.action";
+
+export const useChallenges = (id?: string, searchFilter?: string) => {
+  const challengesQuery = useInfiniteQuery({
+    queryKey: ["challenges", "infinite", searchFilter],
+    queryFn: ({ pageParam }) =>
+      getChallenges(
+        5,
+        pageParam * 5,
+        id!,
+        searchFilter !== "" ? searchFilter : undefined,
+      ),
+    staleTime: 1000 * 60 * 60,
+    initialPageParam: 0,
+    getNextPageParam: (_, allPages) => allPages.length,
+    enabled: !!id,
+  });
+
+  return {
+    challengesQuery,
+
+    loadNextPage: challengesQuery.fetchNextPage,
+  };
+};

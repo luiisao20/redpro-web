@@ -29,7 +29,7 @@ export const Carousel = ({ data, children, hideDots, width, id }: Props) => {
       <div
         ref={carouselRef}
         onScroll={handleScroll}
-        className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4"
+        className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 ml-6"
       >
         {children}
       </div>

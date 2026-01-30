@@ -49,3 +49,19 @@ export interface News {
   description: string;
   image: string;
 }
+
+export interface NewUser {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  code: string;
+  cellphone: string;
+  name: string;
+}
+
+export interface UserData {
+  name: string;
+  cellphone: string;
+  code: string;
+  points: number;
+}

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   BannerCard,
   ChallengeCard,
@@ -8,18 +8,45 @@ import {
 import { Carousel } from "../../components/Carousel";
 import { Header } from "../../components/Header";
 import { PointsComponent } from "../../components/PointsComponent";
-import {
-  bannersMock,
-  challengesMock,
-  newsMock,
-  productsMock,
-} from "../../helpers/examples";
+import { newsMock } from "../../helpers/examples";
 import { driver, type DriveStep } from "driver.js";
 import "driver.js/dist/driver.css";
 import { useNavigate } from "react-router";
+import type {
+  Banner,
+  Challenge,
+  Product,
+  UserData,
+} from "../../interfaces/interface";
+import { useAuthStore } from "../../presentation/core/useAuthStore";
+import { useUser } from "../../presentation/user/useUser";
+import { LoaderComponent } from "../../components/LoaderComponent";
+import { useBanners } from "../../presentation/userData/useBanners";
+import { useChallenges } from "../../presentation/userData/useChallenges";
+import { useRewards } from "../../presentation/userData/useRewards";
+
+interface ClientData {
+  banners: Banner[];
+  challenges: Challenge[];
+  rewards: Product[];
+}
 
 export const DashHome = () => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState<UserData>();
+  const [clientData, setClientData] = useState<ClientData>({
+    banners: [],
+    challenges: [],
+    rewards: [],
+  });
+
+  const { user } = useAuthStore();
+
+  const { userQuery } = useUser(user?.id);
+  const { bannersQuery } = useBanners(user?.id);
+  const { challengesQuery } = useChallenges(user?.id);
+  const { rewardsQuery } = useRewards({ filter: "", id: user?.id });
+
   const steps: DriveStep[] = [
     {
       popover: {
@@ -77,6 +104,29 @@ export const DashHome = () => {
     steps,
   });
 
+  // Client data
+  useEffect(() => {
+    if (bannersQuery.data)
+      setClientData((prev) => ({ ...prev, banners: bannersQuery.data }));
+  }, [bannersQuery.data]);
+
+  useEffect(() => {
+    if (challengesQuery.data)
+      setClientData((prev) => ({
+        ...prev,
+        challenges: challengesQuery.data.pages.flatMap((page) => page) ?? [],
+      }));
+  }, [challengesQuery.data]);
+
+  useEffect(() => {
+    if (rewardsQuery.data)
+      setClientData((prev) => ({
+        ...prev,
+        rewards: rewardsQuery.data.pages.flatMap((page) => page) ?? [],
+      }));
+  }, [rewardsQuery.data]);
+
+  // Tutorial
   useEffect(() => {
     const seen = localStorage.getItem("tutorial") === "seen";
     if (!seen) driverObj.drive();
@@ -101,40 +151,49 @@ export const DashHome = () => {
     };
   }, []);
 
+  // User data
+  useEffect(() => {
+    if (userQuery.data) setUserData(userQuery.data);
+  }, [userQuery.data]);
+
+  if (!userData || userQuery.isLoading) {
+    return <LoaderComponent />;
+  }
+
   return (
-    <div className="px-10 mb-30">
-      <div id="demo-theme" onClick={() => driverObj.drive()}>
-        <Header />
-      </div>
-      <PointsComponent id="points" />
-      <Carousel id="banners" hideDots data={bannersMock}>
-        {bannersMock.map((item, index) => (
+    <div className="mb-30">
+      {/* <div id="demo-theme" onClick={() => driverObj.drive()}> */}
+      <Header user={userData} />
+      {/* </div> */}
+      <PointsComponent points={userData.points} id="points" />
+      <Carousel id="banners" hideDots data={clientData.banners}>
+        {clientData.banners.map((item, index) => (
           <BannerCard key={index} item={item} />
         ))}
       </Carousel>
-      <div className="flex justify-between text-xl">
+      <div className="flex mx-6 justify-between text-xl">
         <h2 className="font-bold">Retos destacados</h2>
         <a className="font-thin hover:underline hover:underline-offset-2 cursor-pointer">
           Ver todos
         </a>
       </div>
-      <Carousel id="challenges" width={256} data={challengesMock}>
-        {challengesMock.map((item, index) => (
+      <Carousel id="challenges" width={256} data={clientData.challenges}>
+        {clientData.challenges.map((item, index) => (
           <ChallengeCard key={index} item={item} />
         ))}
       </Carousel>
-      <div className="flex justify-between text-xl mt-6">
+      <div className="flex mx-6 justify-between text-xl mt-6">
         <h2 className="font-bold">Canjea tus puntos</h2>
         <a className="font-thin hover:underline hover:underline-offset-2 cursor-pointer">
           Ver todos
         </a>
       </div>
-      <Carousel id="rewards" data={productsMock} width={120}>
-        {productsMock.map((item, index) => (
-          <RewardCard key={index} item={item} />
+      <Carousel id="rewards" data={clientData.rewards} width={160}>
+        {clientData.rewards.map((item, index) => (
+          <RewardCard key={index} item={item} canRedeem={userData.points >= item.points} />
         ))}
       </Carousel>
-      <div className="flex justify-between text-xl mt-6">
+      <div className="flex mx-6 justify-between text-xl mt-6">
         <h2 className="font-bold">Noticias</h2>
         <a className="font-thin hover:underline hover:underline-offset-2 cursor-pointer">
           Ver todos
