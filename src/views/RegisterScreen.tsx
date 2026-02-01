@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { Button, GoBackButton } from "../components/Button";
 import { InputComponent } from "../components/InputComponent";
 import type { NewUser } from "../interfaces/interface";
-import { useAuthStore } from "../presentation/core/useAuthStore";
+import { useAuthStore } from "../presentation/store/useAuthStore";
 import { registerSchema } from "../helpers/get-errors.helper";
 import { useUser } from "../presentation/user/useUser";
 import { CustomErrorMessage } from "../components/CustomErrorMessage";

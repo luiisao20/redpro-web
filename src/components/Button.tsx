@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes } from "react";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -55,3 +56,41 @@ export const GoBackButton = ({
     </button>
   );
 };
+
+interface FilterProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  title: string;
+  variant?: "default" | "black";
+}
+
+export const ButtonFilter = ({
+  title,
+  variant = "default",
+  ...rest
+}: FilterProps) => (
+  <button
+    {...rest}
+    className={`px-4 py-2 rounded-2xl active:opacity-60 ${variant === "default" ? "bg-buttonLight" : "bg-buttonDark"}`}
+  >
+    <p className={`font-medium text-xs ${variant === "black" && "text-white"}`}>
+      {title}
+    </p>
+  </button>
+);
+
+interface SubFilterProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  title: string;
+}
+
+export const ButtonSubFilter = ({ title, ...rest }: SubFilterProps) => (
+  <button
+    {...rest}
+    className="bg-gray flex flex-row items-center px-2 py-1 gap-6 rounded-xl"
+  >
+    <p className="text-white text-sm font-regular">{title}</p>
+    <IoIosCloseCircleOutline
+      size={22}
+      className="active:opacity-60"
+      color="white"
+    />
+  </button>
+);

@@ -65,3 +65,16 @@ export interface UserData {
   code: string;
   points: number;
 }
+
+export interface TransactionHistory {
+  id?: number;
+  date: string;
+  idChallenge?: number;
+  challengeName?: string;
+  challengePoints?: number;
+  challengeDescription?: string;
+  idReward?: number;
+  rewardName?: string;
+  rewardPoints?: number;
+  rewardDescription?: string;
+}

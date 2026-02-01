@@ -2,7 +2,7 @@ import { Button, GoBackButton } from "../components/Button";
 import { useNavigate } from "react-router";
 import { InputComponent } from "../components/InputComponent";
 import { useState } from "react";
-import { useAuthStore } from "../presentation/core/useAuthStore";
+import { useAuthStore } from "../presentation/store/useAuthStore";
 
 interface LoginData {
   email: string;

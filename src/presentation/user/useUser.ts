@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { insertNewUser } from "../../core/database/users/insert-new-user.action";
 import { getCurrentUser } from "../../core/database/users/get-current-user.action";
+import { decreaseClientPoints } from "../../core/database/users/update-client-points.action";
 
 interface UserMutation {
   name: string;
@@ -33,5 +34,23 @@ export const useUser = (userId?: string) => {
     },
   });
 
-  return { userQuery, userMutation };
+  const userPointsMutation = useMutation({
+    mutationFn: ({
+      oldPoints,
+      pointsToDecrease,
+    }: {
+      oldPoints: number;
+      pointsToDecrease: number;
+    }) => decreaseClientPoints(userId!, oldPoints, pointsToDecrease),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user", userId] });
+    },
+
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  return { userQuery, userMutation, userPointsMutation };
 };

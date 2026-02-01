@@ -13,7 +13,8 @@ export const useChallenges = (id?: string, searchFilter?: string) => {
       ),
     staleTime: 1000 * 60 * 60,
     initialPageParam: 0,
-    getNextPageParam: (_, allPages) => allPages.length,
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.length === 5 ? allPages.length : undefined,
     enabled: !!id,
   });
 
@@ -21,5 +22,6 @@ export const useChallenges = (id?: string, searchFilter?: string) => {
     challengesQuery,
 
     loadNextPage: challengesQuery.fetchNextPage,
+    nextPage: challengesQuery.hasNextPage,
   };
 };

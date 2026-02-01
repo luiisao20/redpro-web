@@ -10,7 +10,7 @@ import { IoIosArrowForward } from "react-icons/io";
 
 import { type UserData } from "../../interfaces/interface";
 import { useUser } from "../../presentation/user/useUser";
-import { useAuthStore } from "../../presentation/core/useAuthStore";
+import { useAuthStore } from "../../presentation/store/useAuthStore";
 import { Button, GoBackButton } from "../../components/Button";
 import { Colors } from "../../assets/colors";
 import { useNavigate } from "react-router";

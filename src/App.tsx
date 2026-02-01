@@ -1,7 +1,7 @@
 import "./assets/main.css";
 import "./assets/fonts.css";
 import { Outlet, useLocation, useNavigate } from "react-router";
-import { useAuthStore } from "./presentation/core/useAuthStore";
+import { useAuthStore } from "./presentation/store/useAuthStore";
 import { useEffect } from "react";
 import { LoaderComponent } from "./components/LoaderComponent";
 
@@ -15,7 +15,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(location.pathname);
     if (
       !["/", "/welcome", "/login", "/register"].includes(location.pathname) &&
       status === "unauthenticated"

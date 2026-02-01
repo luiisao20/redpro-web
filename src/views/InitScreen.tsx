@@ -3,7 +3,7 @@ import { Button } from "../components/Button";
 import { useSwipeable } from "react-swipeable";
 import { mockOnboarding } from "../helpers/examples";
 import { useNavigate } from "react-router";
-import { useAuthStore } from "../presentation/core/useAuthStore";
+import { useAuthStore } from "../presentation/store/useAuthStore";
 
 export const InitScreen = () => {
   const [index, setIndex] = useState(0);

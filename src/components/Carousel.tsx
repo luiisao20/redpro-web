@@ -6,9 +6,17 @@ interface Props {
   hideDots?: boolean;
   width?: number;
   id?: string;
+  classAdded?: string;
 }
 
-export const Carousel = ({ data, children, hideDots, width, id }: Props) => {
+export const Carousel = ({
+  data,
+  children,
+  hideDots,
+  width,
+  id,
+  classAdded,
+}: Props) => {
   const [index, setIndex] = useState(0);
 
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -29,7 +37,7 @@ export const Carousel = ({ data, children, hideDots, width, id }: Props) => {
       <div
         ref={carouselRef}
         onScroll={handleScroll}
-        className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 ml-6"
+        className={`flex overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar py-4 ml-6 ${classAdded}`}
       >
         {children}
       </div>

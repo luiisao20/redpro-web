@@ -35,7 +35,8 @@ export const useRewards = ({
           : getNonExchangeableProducts(8, pageParam * 8, id!, points!),
     staleTime: 1000 * 60 * 60,
     initialPageParam: 0,
-    getNextPageParam: (_, allPages) => allPages.length,
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.length === 8 ? allPages.length : undefined,
     enabled: !!id,
   });
 
@@ -58,5 +59,6 @@ export const useRewards = ({
     rewardsQuery,
 
     loadNextPage: rewardsQuery.fetchNextPage,
+    nextPage: rewardsQuery.hasNextPage,
   };
 };

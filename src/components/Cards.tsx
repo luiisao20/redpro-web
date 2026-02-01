@@ -1,5 +1,7 @@
 import type { Banner, Challenge, News, Product } from "../interfaces/interface";
-import { FaCheck, FaLock } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
+import { MdVerified } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 interface BannerComponent {
   item: Banner;
@@ -19,22 +21,42 @@ export const BannerCard = ({ item }: BannerComponent) => {
 
 interface ChallengeComponent {
   item: Challenge;
+  half?: boolean;
 }
 
-export const ChallengeCard = ({ item }: ChallengeComponent) => {
+export const ChallengeCard = ({ item, half }: ChallengeComponent) => {
+  const navigate = useNavigate();
   return (
-    <div key={item.id} className="shadow-md flex flex-col justify-between min-w-68 rounded-xl mr-4">
-      <div className="p-4 flex flex-col space-y-2">
+    <div
+      onClick={() => navigate(`/challenge/${item.id}`)}
+      key={item.id}
+      className={`shadow-md/30 flex flex-col justify-between rounded-xl ${!half && "min-w-68 mr-4"} active:opacity-60 `}
+    >
+      <div
+        className={`flex flex-col ${half ? "p-2 space-y-1" : "space-y-2 p-4"}`}
+      >
         <h2 className="font-semibold">{item.name}</h2>
-        <p className="font-thin text-gray">{item.description}</p>
-        <div className="flex gap-3 items-end">
-          <p className="text-buttonDark font-medium border border-gray text-sm px-2 rounded-xl">
+        <p
+          className={`font-thin line-clamp-2 text-gray ${half && "text-[10px]"}`}
+        >
+          {item.description}
+        </p>
+        <div
+          className={`flex items-end ${half ? "flex-col items-start gap-1" : "flex-row gap-3"}`}
+        >
+          <p
+            className={`text-buttonDark font-medium border border-gray px-2 rounded-xl ${half ? "text-xs" : "text-sm"}`}
+          >
             {item.points} Puntos
           </p>
           <p className="text-xs text-red-500">Te quedan {item.leftDays} dias</p>
         </div>
       </div>
-      <img src={item.url} alt="" className="w-full h-40 rounded-b-xl" />
+      <img
+        src={item.url}
+        alt=""
+        className={`w-full rounded-b-xl ${!half && "h-40"}`}
+      />
     </div>
   );
 };
@@ -53,8 +75,12 @@ export const RewardCard = ({
   disabledGo,
 }: RewardComponent) => {
   const { url, name, points } = item;
+  const navigate = useNavigate();
   return (
-    <div className="bg-background rounded-2xl mr-4 shadow-md min-w-40">
+    <div
+      onClick={() => navigate(`/reward/${item.id}`)}
+      className={`bg-background rounded-2xl shadow-md/30 ${!half && "min-w-40 mr-4"}`}
+    >
       <img
         src={url}
         alt={name}
@@ -71,13 +97,13 @@ export const RewardCard = ({
         </h3>
 
         {half ? (
-          <div className="flex items-center px-2 text-sm">
+          <div className="flex items-center px-2 text-[10px]">
             {canRedeem ? (
-              <FaCheck className="text-tabs" />
+              <MdVerified className="text-tabs" size={30} />
             ) : (
-              <FaLock className="text-gray" />
+              <FaLock className="text-gray" size={26} />
             )}
-            <span className="ml-2 text-sm">
+            <span className="ml-2">
               {canRedeem
                 ? "Ya puedes canjear este premio"
                 : "Te faltan puntos para este canje"}

@@ -18,7 +18,7 @@ import type {
   Product,
   UserData,
 } from "../../interfaces/interface";
-import { useAuthStore } from "../../presentation/core/useAuthStore";
+import { useAuthStore } from "../../presentation/store/useAuthStore";
 import { useUser } from "../../presentation/user/useUser";
 import { LoaderComponent } from "../../components/LoaderComponent";
 import { useBanners } from "../../presentation/userData/useBanners";
@@ -173,7 +173,10 @@ export const DashHome = () => {
       </Carousel>
       <div className="flex mx-6 justify-between text-xl">
         <h2 className="font-bold">Retos destacados</h2>
-        <a className="font-thin hover:underline hover:underline-offset-2 cursor-pointer">
+        <a
+          onClick={() => navigate("/dashboard/challenges")}
+          className="font-thin hover:underline hover:underline-offset-2 cursor-pointer"
+        >
           Ver todos
         </a>
       </div>
@@ -184,13 +187,20 @@ export const DashHome = () => {
       </Carousel>
       <div className="flex mx-6 justify-between text-xl mt-6">
         <h2 className="font-bold">Canjea tus puntos</h2>
-        <a className="font-thin hover:underline hover:underline-offset-2 cursor-pointer">
+        <a
+          onClick={() => navigate("/dashboard/rewards")}
+          className="font-thin hover:underline hover:underline-offset-2 cursor-pointer"
+        >
           Ver todos
         </a>
       </div>
       <Carousel id="rewards" data={clientData.rewards} width={160}>
         {clientData.rewards.map((item, index) => (
-          <RewardCard key={index} item={item} canRedeem={userData.points >= item.points} />
+          <RewardCard
+            key={index}
+            item={item}
+            canRedeem={userData.points >= item.points}
+          />
         ))}
       </Carousel>
       <div className="flex mx-6 justify-between text-xl mt-6">

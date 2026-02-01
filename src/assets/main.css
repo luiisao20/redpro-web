@@ -1,5 +1,6 @@
 @import url(./normalize.css);
 @import "tailwindcss";
+@import 'tailwind-animations';
 
 @theme {
   --color-text: #11181c;
