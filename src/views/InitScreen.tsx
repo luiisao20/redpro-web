@@ -4,12 +4,16 @@ import { useSwipeable } from "react-swipeable";
 import { mockOnboarding } from "../helpers/examples";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "../presentation/store/useAuthStore";
+import { useNicknameStore } from "../presentation/store/useNickStore";
 
 export const InitScreen = () => {
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
+  const [nickName, setNickName] = useState("");
+  const [error, setError] = useState(false);
 
   const { status } = useAuthStore();
+  const { setNickname } = useNicknameStore();
 
   const indexFinal: number = Math.min(
     mockOnboarding.length,
@@ -24,8 +28,8 @@ export const InitScreen = () => {
   });
 
   useEffect(() => {
-    if (status === 'authenticated') navigate('/dashboard/home')
-  }, [])
+    if (status === "authenticated") navigate("/dashboard/home");
+  }, []);
 
   return (
     <div {...handlers} className="overflow-hidden w-full">
@@ -49,18 +53,31 @@ export const InitScreen = () => {
               <input
                 className="bg-buttonLight border-buttonLight w-full text-4xl h-15 mx-10 border rounded-xl text-center"
                 placeholder="Apodo"
+                value={nickName}
+                onChange={(e) => setNickName(e.target.value)}
               />
             )}
             <Button
               onClick={() => {
                 if (index === indexFinal) {
-                  navigate("/welcome");
+                  if (nickName.length < 4) {
+                    setError(true);
+                    return;
+                  }
+                  navigate("/register");
+                  setNickname(nickName);
                 } else {
                   setIndex((i) => Math.min(i + 1, mockOnboarding.length - 1));
                 }
               }}
+              disabled={nickName.trim() === "" && index === indexFinal}
               text="Continuar"
             />
+            {error && (
+              <p className="text-red-500 text-sm my-1 ml-2">
+                ¡El nombre está muy corto!
+              </p>
+            )}
           </div>
         ))}
       </div>

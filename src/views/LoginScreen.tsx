@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useAuthStore } from "../presentation/store/useAuthStore";
 
 interface LoginData {
-  email: string;
+  code: string;
   password: string;
 }
 
@@ -13,19 +13,19 @@ export const LoginScreen = () => {
   const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState<LoginData>({
-    email: "",
+    code: "",
     password: "",
   });
 
   const { login, loading } = useAuthStore();
 
   const handleLogin = async () => {
-    if (loginData.email.trim() === "" || loginData.password.trim() === "") {
+    if (loginData.code.trim() === "" || loginData.password.trim() === "") {
       alert("Los campos estan vacios");
       return;
     }
 
-    const wasSuccessful = await login(loginData.email, loginData.password);
+    const wasSuccessful = await login(loginData.code, loginData.password);
 
     if (wasSuccessful) return navigate("/dashboard/home");
   };
@@ -38,14 +38,15 @@ export const LoginScreen = () => {
           Bienvenido. ¡Nos alegra verte de nuevo!
         </h2>
         <input
-          type="text"
+          type="number"
           className="bg-buttonLight border-buttonLight w-full text-2xl h-15 mx-10 border rounded-xl pl-4"
-          placeholder="Correo electrónico"
+          placeholder="Código de cliente"
           onChange={(e) =>
-            setLoginData((prev) => ({ ...prev, email: e.target.value }))
+            setLoginData((prev) => ({ ...prev, code: e.target.value }))
           }
         />
         <InputComponent
+          autoCapitalize="none"
           placeholder="Contraseña"
           onChange={(e) =>
             setLoginData((prev) => ({ ...prev, password: e.target.value }))
@@ -57,7 +58,7 @@ export const LoginScreen = () => {
         <Button
           text="Iniciar sesión"
           onClick={handleLogin}
-          disabled={loading}
+          loading={loading}
         />
       </div>
       <p className="text-center my-8 text-sm">

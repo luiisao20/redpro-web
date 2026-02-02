@@ -67,3 +67,15 @@ body {
   white-space: pre-line;
   font-family: "Bagoss";
 }
+
+body.tutorial-active {
+  overflow: hidden;
+}
+
+body.tutorial-active .mb-30 { 
+  pointer-events: none; 
+}
+
+.driver-popover, .driver-overlay {
+  pointer-events: auto !important;
+}

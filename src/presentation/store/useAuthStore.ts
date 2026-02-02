@@ -14,7 +14,7 @@ interface AuthState {
   authSubscription?: Subscription;
   loading: boolean;
 
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (code: string, password: string) => Promise<boolean>;
   checkStatus: () => Promise<void>;
   changeStatus: (session?: Session, user?: User) => Promise<boolean>;
   logout: () => Promise<void>;
@@ -32,18 +32,19 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   session: undefined,
   loading: false,
 
-  login: async (email: string, password: string) => {
+  login: async (code: string, password: string) => {
     set({ loading: true });
     try {
-      const res = await loginAction(email, password);
+      const res = await loginAction(code, password);
       return get().changeStatus(res?.session, res?.user);
     } catch (error) {
-      alert(`Ocurrió un error: ${error}`);
+      alert(error);
       throw error;
     } finally {
       set({ loading: false });
     }
   },
+
   checkStatus: async () => {
     const {
       data: { session },
@@ -111,8 +112,15 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
   register: async (data: NewUser) => {
     set({ loading: true });
-    const res = await registerAction(data.email, data.password);
-    set({ loading: false });
-    return get().changeStatus(res?.session, res?.user);
+    const email = `${data.name.replaceAll(" ", "")}.${data.code}@yopmail.com`;
+    try {
+      const res = await registerAction(email, data.password, data.code);
+      return get().changeStatus(res?.session, res?.user);
+    } catch (error) {
+      alert(error);
+      throw error;
+    } finally {
+      set({ loading: false });
+    }
   },
 }));

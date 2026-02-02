@@ -5,6 +5,7 @@ import { FaRegCircle } from "react-icons/fa6";
 
 interface Props {
   rewards?: boolean;
+  transactions?: boolean;
 
   onSetFilter?: (filter: string) => void;
   onCleanFilter?: () => void;
@@ -12,6 +13,8 @@ interface Props {
 
 export const FiltersComponent = ({
   rewards,
+  transactions,
+
   onSetFilter = () => {},
   onCleanFilter = () => {},
 }: Props) => {
@@ -28,10 +31,12 @@ export const FiltersComponent = ({
   const list: string[] = ["Activos", "Próximos"];
 
   const rewardsList: string[] = ["Canjeables", "No canjeables"];
+  const transactionsList: string[] = ["Canjeados", "Obtenidos"];
   const challengesList: string[] = ["Por estado"];
 
   useEffect(() => {
     if (rewards) setMainList(rewardsList);
+    else if (transactions) setMainList(transactionsList)
     else setMainList(challengesList);
   }, []);
 
@@ -47,7 +52,7 @@ export const FiltersComponent = ({
                 title={item}
                 onClick={() => {
                   setFilterList({ show: true, text: item });
-                  if (rewards) onSetFilter(item);
+                  if (rewards || transactions) onSetFilter(item);
                 }}
               />
             ))}
@@ -60,13 +65,13 @@ export const FiltersComponent = ({
               className="active:opacity-60"
               onClick={() => {
                 setFilterList({ show: false, text: "" });
-                if (rewards) onCleanFilter();
+                if (rewards || transactions) onCleanFilter();
               }}
             />
           </div>
         )}
       </div>
-      {filterList.show && !rewards && (
+      {filterList.show && !rewards && !transactions && (
         <div className="px-6 py-4">
           {!subFilter.show ? (
             <div className="flex flex-col gap-4 pb-4 border-b-2">

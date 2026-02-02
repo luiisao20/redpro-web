@@ -14,6 +14,7 @@ import { useAuthStore } from "../../presentation/store/useAuthStore";
 import { Button, GoBackButton } from "../../components/Button";
 import { Colors } from "../../assets/colors";
 import { useNavigate } from "react-router";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Card {
   icon: string;
@@ -31,6 +32,7 @@ export interface UserInfo {
 
 export const IndexProfile = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [userData, setUserData] = useState<UserData>();
 
@@ -77,7 +79,7 @@ export const IndexProfile = () => {
     {
       icon: <TbTicket color={Colors.tabs} size={26} />,
       title: "Historial de canjes",
-      router: "/profile/transactions",
+      router: "transactions",
     },
     {
       icon: <HiOutlineFire color={Colors.tabs} size={26} />,
@@ -122,6 +124,7 @@ export const IndexProfile = () => {
         <div className="flex flex-col w-full border border-textGreen rounded-2xl p-6 gap-4">
           {mockUserInfo.map((item, index) => (
             <a
+              onClick={() => navigate(`${item.router}`)}
               key={index}
               className="flex flex-row justify-between items-center active:opacity-60 gap-6"
             >
@@ -138,7 +141,22 @@ export const IndexProfile = () => {
           variant="red"
           onClick={async () => {
             await logout();
-            navigate("/");
+            navigate("/welcome");
+            queryClient.invalidateQueries({
+              queryKey: ["challenges"],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ["rewards"],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ["banners"],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ["user"],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ["history"],
+            });
           }}
         />
       </div>

@@ -17,6 +17,7 @@ import { ChallengeIndex } from "./views/challenge";
 import { RewardIndex } from "./views/reward";
 import { ConfirmChallenge } from "./views/challenge/ConfirmChallenge";
 import { AcceptChallenge } from "./views/challenge/AcceptChallenge";
+import { TransactionsScreen } from "./views/profile/TransactionsScreen";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +31,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="login" element={<LoginScreen />} />
           <Route path="register" element={<RegisterScreen />} />
           <Route path="onboarding" element={<OnboardingScreen />} />
-          <Route path="profile" element={<IndexProfile />}></Route>
+          <Route path="profile" element={<IndexProfile />} />
+          <Route path="profile/transactions" element={<TransactionsScreen />} />
           <Route path="dashboard" element={<DashboardIndex />}>
             <Route path="home" element={<DashHome />} />
             <Route path="challenges" element={<DashChallenge />} />

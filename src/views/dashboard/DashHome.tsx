@@ -102,6 +102,8 @@ export const DashHome = () => {
     showProgress: false,
     allowClose: false,
     steps,
+    onHighlightStarted: () => document.body.classList.add("tutorial-active"),
+    onDestroyed: () => document.body.classList.remove("tutorial-active"),
   });
 
   // Client data
@@ -140,7 +142,9 @@ export const DashHome = () => {
 
       if (driverObj.getActiveIndex() === steps.length - 1) {
         localStorage.setItem("tutorial", "seen");
+        driverObj.destroy();
         navigate("/onboarding");
+        return;
       }
       driverObj.moveNext();
     };
@@ -161,10 +165,8 @@ export const DashHome = () => {
   }
 
   return (
-    <div className="mb-30">
-      {/* <div id="demo-theme" onClick={() => driverObj.drive()}> */}
+    <div className="mb-30 relative">
       <Header user={userData} />
-      {/* </div> */}
       <PointsComponent points={userData.points} id="points" />
       <Carousel id="banners" hideDots data={clientData.banners}>
         {clientData.banners.map((item, index) => (

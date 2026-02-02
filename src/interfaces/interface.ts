@@ -51,11 +51,9 @@ export interface News {
 }
 
 export interface NewUser {
-  email: string;
   password: string;
   confirmPassword: string;
   code: string;
-  cellphone: string;
   name: string;
 }
 

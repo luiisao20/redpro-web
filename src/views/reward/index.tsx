@@ -24,7 +24,7 @@ export const RewardIndex = () => {
 
   const { rewardMutation, rewardQuery } = useReward(rewardId);
   const { userQuery, userPointsMutation } = useUser(user?.id);
-  const { historyMutation } = useHistory(user?.id);
+  const { historyMutation } = useHistory({ idClient: user?.id, filter: '' });
 
   useEffect(() => {
     if (rewardQuery.data) setDataReward(rewardQuery.data);

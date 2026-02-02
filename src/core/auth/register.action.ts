@@ -3,8 +3,26 @@ import { supabase } from "../../../supabase";
 
 export const registerAction = async (
   email: string,
-  password: string
+  password: string,
+  code: string,
 ): Promise<{ user: User; session: Session } | null> => {
+  console.log(code);
+  
+  const { data: dataDb, error: errorDb } = await supabase
+    .from("clients_codes")
+    .select()
+    .eq("store_id", code);
+
+  if (errorDb) {
+    throw new Error(`Ha ocurrido un error inesperado: ${errorDb.message}`);
+  }
+  console.log(dataDb);
+  
+
+  if (dataDb.length === 0) {
+    throw new Error("¡El código de cliente está incorrecto!");
+  }
+
   email = email.toLowerCase();
 
   const { data, error } = await supabase.auth.signUp({

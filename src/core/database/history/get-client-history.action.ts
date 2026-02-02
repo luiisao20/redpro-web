@@ -3,10 +3,18 @@ import type { TransactionHistory } from "../../../interfaces/interface";
 
 export const getClientHistory = async (
   idClient: string,
+  filter: string,
 ): Promise<TransactionHistory[]> => {
   const transactions: TransactionHistory[] = [];
 
-  const { data, error } = await supabase.rpc("get_client_history", {
+  const rpc =
+    filter === "Canjeados"
+      ? "get_client_history_rewards"
+      : filter === "Obtenidos"
+      ? "get_client_history_challenges"
+      : "get_client_history";
+
+  const { data, error } = await supabase.rpc(rpc, {
     id_client: idClient,
   });
 

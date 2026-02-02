@@ -3,11 +3,17 @@ import { getClientHistory } from "../../core/database/history/get-client-history
 import type { TransactionHistory } from "../../interfaces/interface";
 import { insertClientTransaction } from "../../core/database/history/insert-client-transaction.action";
 
-export const useHistory = (idClient?: string) => {
+export const useHistory = ({
+  idClient,
+  filter,
+}: {
+  idClient?: string;
+  filter: string;
+}) => {
   const queryClient = useQueryClient();
   const historyQuery = useQuery({
-    queryFn: () => getClientHistory(idClient!),
-    queryKey: ["history", idClient],
+    queryFn: () => getClientHistory(idClient!, filter),
+    queryKey: ["history", idClient, filter],
     staleTime: 1000 * 60 * 60,
     enabled: !!idClient,
   });

@@ -5,7 +5,7 @@ import { RedProLogo } from "../components/Icons";
 export const OnboardingScreen = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen space-y-16 mx-16">
+    <div className="flex flex-col justify-center items-center min-h-screen space-y-16 mx-6">
       <div className="flex gap-6">
         <RedProLogo />
         <h2 className="font-bold text-[3rem]">RedPro</h2>

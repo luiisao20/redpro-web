@@ -7,44 +7,43 @@ import { useAuthStore } from "../presentation/store/useAuthStore";
 import { registerSchema } from "../helpers/get-errors.helper";
 import { useUser } from "../presentation/user/useUser";
 import { CustomErrorMessage } from "../components/CustomErrorMessage";
+import { useNicknameStore } from "../presentation/store/useNickStore";
 
 export const RegisterScreen = () => {
   const navigate = useNavigate();
 
   const { user, register } = useAuthStore();
+  const { nickname } = useNicknameStore();
 
   const { userMutation } = useUser(user?.id);
 
   const newUser: NewUser = {
-    cellphone: "",
-    name: "",
-    email: "",
+    name: nickname ?? "",
     password: "",
     confirmPassword: "",
     code: "",
   };
 
   return (
-    <div className="relative min-h-screen grid place-items-center">
+    <div className="relative grid gap-4 place-items-center">
       <GoBackButton onClick={() => navigate(-1)} />
-      <div className="mx-10 flex flex-col gap-5">
-        <h2 className="text-3xl font-bold leading-10 ">
-          ¡Hola! Regístrate para empezar
+      <div className="mx-6 flex flex-col gap-5">
+        <h2 className="text-3xl leading-8 font-bold">
+          ¡Hola {nickname}! Regístrate para empezar.
         </h2>
         <Formik
-          initialValues={newUser}
+          initialValues={{ ...newUser, terms: false }}
           validationSchema={registerSchema}
           onSubmit={async (formLike, { setSubmitting }) => {
             await register(formLike);
             try {
               await userMutation.mutateAsync({
-                cellphone: formLike.cellphone,
                 code: formLike.code,
                 name: formLike.name,
               });
               navigate("/dashboard/home");
             } catch (error) {
-              console.log(error);
+              alert(error);
             }
             setSubmitting(false);
           }}
@@ -62,6 +61,7 @@ export const RegisterScreen = () => {
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <input
                 type="text"
+                hidden
                 className="bg-buttonLight border-buttonLight w-full text-4xl h-15 mx-10 border rounded-xl pl-4"
                 placeholder="Nombres"
                 value={values.name}
@@ -87,36 +87,6 @@ export const RegisterScreen = () => {
               />
               <CustomErrorMessage
                 name="code"
-                errors={errors}
-                touched={touched}
-              />
-              <input
-                type="text"
-                className="bg-buttonLight border-buttonLight w-full text-4xl h-15 mx-10 border rounded-xl pl-4"
-                placeholder="Correo electrónico"
-                value={values.email}
-                onChange={handleChange("email")}
-                onBlur={handleBlur("email")}
-                id="email"
-                name="email"
-              />
-              <CustomErrorMessage
-                name="email"
-                errors={errors}
-                touched={touched}
-              />
-              <input
-                type="text"
-                className="bg-buttonLight border-buttonLight w-full text-4xl h-15 mx-10 border rounded-xl pl-4"
-                placeholder="Celular"
-                value={values.cellphone}
-                onChange={handleChange("cellphone")}
-                onBlur={handleBlur("cellphone")}
-                id="cellphone"
-                name="cellphone"
-              />
-              <CustomErrorMessage
-                name="cellphone"
                 errors={errors}
                 touched={touched}
               />
@@ -148,15 +118,26 @@ export const RegisterScreen = () => {
               />
               <div className="flex gap-4 place-self-end">
                 <input
-                  id="accept"
-                  name="accept"
+                  id="terms"
+                  name="terms"
                   type="checkbox"
                   className="bg-buttonDark text-buttonDark"
+                  onChange={handleChange}
+                  checked={values.terms}
                 />
-                <label className="text-xs" htmlFor="accept">
-                  Aceptar términos y condiciones
-                </label>
+                <a
+                  href="https://www.tradecentralec.com/politicas"
+                  target="_blank"
+                  className="text-xs"
+                >
+                  Política de privacidad y Protección de datos
+                </a>
               </div>
+              <CustomErrorMessage
+                name="terms"
+                errors={errors}
+                touched={touched}
+              />
               <Button type="submit" text="Continuar" disabled={isSubmitting} />
             </form>
           )}
@@ -164,7 +145,10 @@ export const RegisterScreen = () => {
       </div>
       <p className="text-center my-6 text-sm">
         ¿Ya posees una cuenta?{" "}
-        <a onClick={() => navigate('/login')} className="text-link font-bold hover:underline hover:underline-offset-2 cursor-pointer">
+        <a
+          onClick={() => navigate("/login")}
+          className="text-link font-bold hover:underline hover:underline-offset-2 cursor-pointer"
+        >
           Inicia sesión aquí
         </a>
       </p>

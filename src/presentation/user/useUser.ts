@@ -6,7 +6,6 @@ import { decreaseClientPoints } from "../../core/database/users/update-client-po
 interface UserMutation {
   name: string;
   code: string;
-  cellphone: string;
 }
 
 export const useUser = (userId?: string) => {
@@ -20,8 +19,8 @@ export const useUser = (userId?: string) => {
   });
 
   const userMutation = useMutation({
-    mutationFn: ({ name, cellphone, code }: UserMutation) =>
-      insertNewUser(userId!, code, name, cellphone),
+    mutationFn: ({ name, code }: UserMutation) =>
+      insertNewUser(userId!, code, name),
 
     onSuccess: () => {
       queryClient.invalidateQueries({
