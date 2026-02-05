@@ -5,7 +5,7 @@ export const getBanners = async (id: string): Promise<Banner[]> => {
   const banners: Banner[] = [];
 
   const { data, error } = await supabase.rpc("get_clients_banners", {
-    id_client: id,
+    code_client: id,
   });
 
   if (error) throw new Error(error.message);

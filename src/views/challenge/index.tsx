@@ -69,10 +69,10 @@ export const ChallengeIndex = () => {
               <div className="w-full bg-lightGreen rounded-full h-2">
                 <div
                   className="bg-textGreen h-2 rounded-full"
-                  style={{ width: "45%" }}
+                  style={{ width: `${challengeData.progress}%` }}
                 ></div>
               </div>
-              <p className="text-[10px] self-end">60% de 100%</p>
+              <p className="text-[10px] self-end">{challengeData.progress}% de 100%</p>
             </div>
           </div>
         ) : (

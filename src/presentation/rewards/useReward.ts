@@ -11,11 +11,21 @@ export const useReward = (id: number) => {
   });
 
   const rewardMutation = useMutation({
-    mutationFn: (idClient: string) => updateReward(idClient, id),
+    mutationFn: ({
+      codeClient,
+      rewardId,
+    }: {
+      codeClient: string;
+      rewardId: number;
+    }) => updateReward(codeClient, rewardId),
 
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["products", "infinite"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["product", id],
       });
     },
 

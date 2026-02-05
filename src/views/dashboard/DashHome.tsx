@@ -43,9 +43,13 @@ export const DashHome = () => {
   const { user } = useAuthStore();
 
   const { userQuery } = useUser(user?.id);
-  const { bannersQuery } = useBanners(user?.id);
+  const { bannersQuery } = useBanners(userData?.code);
   const { challengesQuery } = useChallenges(user?.id);
-  const { rewardsQuery } = useRewards({ filter: "", id: user?.id });
+  const { rewardsQuery } = useRewards({
+    filter: "",
+    codeClient: userData?.code,
+    maxPoints: userData?.maxPoints,
+  });
 
   const steps: DriveStep[] = [
     {
@@ -130,8 +134,8 @@ export const DashHome = () => {
 
   // Tutorial
   useEffect(() => {
-    const seen = localStorage.getItem("tutorial") === "seen";
-    if (!seen) driverObj.drive();
+    // const seen = localStorage.getItem("tutorial") === "seen";
+    // if (!seen) driverObj.drive();
   }, []);
 
   useEffect(() => {

@@ -24,6 +24,7 @@ export interface Challenge {
   url?: string;
   products?: Sku[];
   isAccepted?: boolean;
+  progress?: number;
 }
 
 export interface Banner {
@@ -62,6 +63,7 @@ export interface UserData {
   cellphone: string;
   code: string;
   points: number;
+  maxPoints?: number;
 }
 
 export interface TransactionHistory {

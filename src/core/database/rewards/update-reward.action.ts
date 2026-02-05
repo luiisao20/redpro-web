@@ -1,11 +1,9 @@
 import { supabase } from "../../../../supabase";
 
-export const updateReward = async (idClient: string, idProduct: number) => {
+export const updateReward = async (codeClient: string, rewardId: number) => {
   const { error } = await supabase
     .from("clients_rewards")
-    .update({ is_claimed: true })
-    .eq("client_id", idClient)
-    .eq("reward_id", idProduct);
+    .insert({ is_claimed: true, reward_id: rewardId, store_id: codeClient });
 
   if (error) throw new Error(error.message);
 };

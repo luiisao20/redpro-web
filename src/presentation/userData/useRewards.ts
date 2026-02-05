@@ -1,25 +1,21 @@
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getProducts } from "../../core/database/userData/get-rewards.action";
 import { getExchangeableProducts } from "../../core/database/userData/get-exchangable-rewards.action";
 import { getNonExchangeableProducts } from "../../core/database/userData/get-non-exchangable-rewards.action";
-import { updateProduct } from "../../core/database/userData/update-products.action";
 
 export const useRewards = ({
   points,
   filter,
-  id,
+  codeClient,
   searchText,
+  maxPoints,
 }: {
   filter: string;
   points?: number;
-  id?: string;
+  maxPoints?: number;
+  codeClient?: string;
   searchText?: string;
 }) => {
-  const queryClient = useQueryClient();
   const rewardsQuery = useInfiniteQuery({
     queryKey: ["products", "infinite", filter, searchText],
     queryFn: ({ pageParam }) =>
@@ -27,35 +23,35 @@ export const useRewards = ({
         ? getProducts(
             8,
             pageParam * 8,
-            id!,
+            maxPoints!,
             searchText !== "" ? searchText : undefined,
+            codeClient!,
           )
         : filter === "Canjeables"
-          ? getExchangeableProducts(8, pageParam * 8, id!, points!)
-          : getNonExchangeableProducts(8, pageParam * 8, id!, points!),
+          ? getExchangeableProducts(
+              8,
+              pageParam * 8,
+              codeClient!,
+              points!,
+              searchText!,
+              maxPoints!,
+            )
+          : getNonExchangeableProducts(
+              8,
+              pageParam * 8,
+              codeClient!,
+              points!,
+              searchText!,
+              maxPoints!,
+            ),
     staleTime: 1000 * 60 * 60,
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) =>
       lastPage.length === 8 ? allPages.length : undefined,
-    enabled: !!id,
-  });
-
-  const rewardsMutation = useMutation({
-    mutationFn: (idProduct: number) => updateProduct(id!, idProduct),
-
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["products", "infinite", filter],
-      });
-    },
-
-    onError: (error) => {
-      console.log(error);
-    },
+    enabled: !!maxPoints && !!codeClient,
   });
 
   return {
-    rewardsMutation,
     rewardsQuery,
 
     loadNextPage: rewardsQuery.fetchNextPage,

@@ -55,7 +55,7 @@ export const ChallengeCard = ({ item, half }: ChallengeComponent) => {
       <img
         src={item.url}
         alt=""
-        className={`w-full rounded-b-xl ${!half && "h-40"}`}
+        className={`w-full rounded-b-xl object-cover ${!half && "h-40"}`}
       />
     </div>
   );

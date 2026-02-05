@@ -1,6 +1,6 @@
 import { useState, useEffect, type ReactNode } from "react";
 import { useNavigate, useParams } from "react-router";
-import type { Challenge } from "../../interfaces/interface";
+import type { Challenge, UserData } from "../../interfaces/interface";
 import { useChallenge } from "../../presentation/challenges/useChallenge";
 import { useAuthStore } from "../../presentation/store/useAuthStore";
 import { FiGift } from "react-icons/fi";
@@ -10,6 +10,7 @@ import { Colors } from "../../assets/colors";
 import { formatDateLong } from "../../helpers/format-date-long";
 import { RedProLogo } from "../../components/Icons";
 import { Button, GoBackButton } from "../../components/Button";
+import { useUser } from "../../presentation/user/useUser";
 
 interface Item {
   icon: ReactNode;
@@ -23,6 +24,7 @@ export const ConfirmChallenge = () => {
   const challengeId = parseInt(id!);
 
   const [challengeData, setChallengeData] = useState<Challenge>();
+  const [userData, setUserData] = useState<UserData>();
 
   const { user } = useAuthStore();
 
@@ -30,6 +32,7 @@ export const ConfirmChallenge = () => {
     challengeId,
     user?.id,
   );
+  const { userQuery } = useUser(user?.id);
 
   const items: Item[] = [
     {
@@ -54,6 +57,10 @@ export const ConfirmChallenge = () => {
   }, [challengeQuery.data]);
 
   useEffect(() => {
+    if (userQuery.data) setUserData(userQuery.data);
+  }, [userQuery.data]);
+
+  useEffect(() => {
     if (challengeStatusMutation.isSuccess)
       navigate(`/accepted/challenge/${challengeData?.id}`);
   }, [challengeStatusMutation.isSuccess]);
@@ -61,7 +68,7 @@ export const ConfirmChallenge = () => {
   const handleAccept = async () => {
     await challengeStatusMutation.mutateAsync({
       data: challengeData!,
-      id: user?.id!,
+      id: userData?.code!,
     });
   };
 

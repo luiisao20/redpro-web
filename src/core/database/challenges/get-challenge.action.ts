@@ -25,6 +25,7 @@ export const getChallenge = async (
     leftDays: getLeftDays(data[0].due_date),
     type: data[0].type,
     isAccepted: data[0].is_accepted,
+    progress: data[0].progress,
     products: data[0].products
       ? data[0].products.map((item: any) => ({
           id: item.id,

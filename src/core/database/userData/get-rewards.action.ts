@@ -4,14 +4,16 @@ import type { Product } from "../../../interfaces/interface";
 export const getProducts = async (
   limit = 5,
   offset = 0,
-  id: string,
+  maxPoints: number,
   searchText?: string,
+  code?: string,
 ): Promise<Product[]> => {
   const products: Product[] = [];
 
   const { data, error } = await supabase
     .rpc("get_client_rewards", {
-      id_client: id,
+      code_client: code,
+      max_points: maxPoints,
       search_text: searchText ?? "",
     })
     .range(offset, offset + limit - 1);

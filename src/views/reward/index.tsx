@@ -24,7 +24,7 @@ export const RewardIndex = () => {
 
   const { rewardMutation, rewardQuery } = useReward(rewardId);
   const { userQuery, userPointsMutation } = useUser(user?.id);
-  const { historyMutation } = useHistory({ idClient: user?.id, filter: '' });
+  const { historyMutation } = useHistory({ idClient: user?.id, filter: "" });
 
   useEffect(() => {
     if (rewardQuery.data) setDataReward(rewardQuery.data);
@@ -45,7 +45,10 @@ export const RewardIndex = () => {
 
     await historyMutation.mutateAsync(transaction);
 
-    await rewardMutation.mutateAsync(user?.id!);
+    await rewardMutation.mutateAsync({
+      codeClient: userData?.code!,
+      rewardId: dataReward?.id!,
+    });
 
     await userPointsMutation.mutateAsync({
       oldPoints: userData?.points!,

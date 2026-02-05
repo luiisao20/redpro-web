@@ -4,7 +4,12 @@ import type { UserData } from "../../../interfaces/interface";
 export const getCurrentUser = async (userId: string): Promise<UserData> => {
   const { data, error } = await supabase
     .from("clients")
-    .select()
+    .select(
+      `
+    *,
+    clients_codes(*)
+  `,
+    )
     .eq("id", userId)
     .single();
 
@@ -15,6 +20,7 @@ export const getCurrentUser = async (userId: string): Promise<UserData> => {
     code: data.store_id,
     name: data.full_name,
     points: data.points,
+    maxPoints: data.clients_codes.max_points,
   };
 
   return user;

@@ -19,8 +19,9 @@ export const DashRewards = () => {
   const { loadNextPage, rewardsQuery, nextPage } = useRewards({
     points: userData?.points,
     searchText: searchFilter,
-    id: user?.id,
+    codeClient: userData?.code,
     filter: filter,
+    maxPoints: userData?.maxPoints,
   });
 
   useEffect(() => {
