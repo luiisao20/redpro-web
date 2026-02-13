@@ -27,7 +27,7 @@ export const LoginScreen = () => {
 
     const wasSuccessful = await login(loginData.code, loginData.password);
 
-    if (wasSuccessful) return navigate("/dashboard/home");
+    if (wasSuccessful) return navigate("/dashboard/home", {replace: true});
   };
 
   return (
@@ -52,9 +52,9 @@ export const LoginScreen = () => {
             setLoginData((prev) => ({ ...prev, password: e.target.value }))
           }
         />
-        <a className="text-link text-sm place-self-end hover:underline hover:underline-offset-2 mb-3 cursor-pointer">
+        {/* <a className="text-link text-sm place-self-end hover:underline hover:underline-offset-2 mb-3 cursor-pointer">
           ¿Olvidaste tu contraseña?
-        </a>
+        </a> */}
         <Button
           text="Iniciar sesión"
           onClick={handleLogin}
@@ -64,7 +64,7 @@ export const LoginScreen = () => {
       <p className="text-center my-8 text-sm">
         ¿No tienes cuenta?{" "}
         <a
-          onClick={() => navigate("/register")}
+          onClick={() => navigate("/welcome")}
           className="text-link font-bold hover:underline hover:underline-offset-2 cursor-pointer"
         >
           Regístrate aquí

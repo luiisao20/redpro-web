@@ -15,7 +15,7 @@ export interface Challenge {
   name: string;
   description: string;
   leftDays: number;
-  points: string | number;
+  points: number;
   startDate?: string;
   endDate?: string;
   type?: string;
@@ -77,4 +77,9 @@ export interface TransactionHistory {
   rewardName?: string;
   rewardPoints?: number;
   rewardDescription?: string;
+}
+
+export interface ProfileInfo {
+  challengeCount: number;
+  rewardCount: number;
 }

@@ -3,19 +3,21 @@ import type { News, Onboarding } from "../interfaces/interface";
 export const mockOnboarding: Onboarding[] = [
   {
     title: "Bienvenido a Red Pro",
-    description: "La red que te conecta con beneficios y servicios de Pronaca.",
-    image: "/onboarding-1.png",
-  },
-  {
-    title: "Todo en un solo lugar",
     description:
-      "Consulta tus beneficios, gestiona tus servicios y haz crecer tu negocio.",
-    image: "/onboarding-2.png",
+      "Tu nueva forma de acceder a beneficios, retos y premios para ti y tu negocio.",
+    image: "/images/1.png",
   },
   {
-    title: "Queremos conocerte",
-    description: "¿Cómo quieres que te llamemos en la app?",
-    image: "/onboarding-3.png",
+    title: "Cumple retos y gana premios increíbles",
+    description:
+      "Usa RedPro, completa tus retos y acumula puntos para canjear beneficios que te ayuden a hacer crecer tu tienda",
+    image: "/images/2.png",
+  },
+  {
+    title: "Queremos llamarte como a ti te gusta",
+    description:
+      "Escríbenos tu nombre o apodo para saludarte de forma más cercana en RedPro",
+    image: "/images/3.png",
   },
 ];
 

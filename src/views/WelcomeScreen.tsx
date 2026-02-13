@@ -8,13 +8,15 @@ export const WelcomeScreen = () => {
     <div className="min-h-screen flex flex-col justify-center items-center mx-6 gap-10">
       <div className="flex gap-6 items-center">
         <RedProLogo />
-        <h2 className="font-bold text-[2.5rem]">RedPro</h2>
       </div>
-      <Button text="Iniciar Sesión" onClick={() => navigate("/login")} />
+      <Button
+        text="Iniciar Sesión"
+        onClick={() => navigate("/login", { replace: true })}
+      />
       <Button
         text="Registrate aquí"
         variant="light"
-        onClick={() => navigate("/register")}
+        onClick={() => navigate("/welcome")}
       />
     </div>
   );

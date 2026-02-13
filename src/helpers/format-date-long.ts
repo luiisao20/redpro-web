@@ -4,6 +4,7 @@ export const formatDateLong = (fecha: string): string => {
   const options: Intl.DateTimeFormatOptions = {
     day: "numeric",
     month: "long",
+    timeZone: "UTC",
   };
 
   return date.toLocaleDateString("es-ES", options).replace(" de ", " de ");

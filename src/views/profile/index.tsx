@@ -8,13 +8,14 @@ import { HiOutlineFire } from "react-icons/hi";
 import { FaRegCommentDots } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 
-import { type UserData } from "../../interfaces/interface";
+import type { UserData, ProfileInfo } from "../../interfaces/interface";
 import { useUser } from "../../presentation/user/useUser";
 import { useAuthStore } from "../../presentation/store/useAuthStore";
 import { Button, GoBackButton } from "../../components/Button";
 import { Colors } from "../../assets/colors";
 import { useNavigate } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
+import { useProfileInfo } from "../../presentation/userData/useProfileInfo";
 
 interface Card {
   icon: string;
@@ -35,10 +36,11 @@ export const IndexProfile = () => {
   const queryClient = useQueryClient();
 
   const [userData, setUserData] = useState<UserData>();
-
+  const [profileInfo, setProfileInfo] = useState<ProfileInfo>();
   const { user, logout } = useAuthStore();
 
   const { userQuery } = useUser(user?.id);
+  const { profileQuery } = useProfileInfo(userData?.code);
 
   const cards: Card[] = [
     {
@@ -50,13 +52,13 @@ export const IndexProfile = () => {
     {
       icon: "🎯",
       title: "Retos Completados",
-      data: 10,
+      data: profileInfo?.challengeCount,
       type: "Retos",
     },
     {
       icon: "🛍️",
       title: "Canjes Realizados",
-      data: 5,
+      data: profileInfo?.rewardCount,
       type: "Canjes",
     },
   ];
@@ -95,6 +97,10 @@ export const IndexProfile = () => {
   useEffect(() => {
     if (userQuery.data) setUserData(userQuery.data);
   }, [userQuery.data]);
+
+  useEffect(() => {
+    if (profileQuery.data) setProfileInfo(profileQuery.data);
+  }, [profileQuery.data]);
 
   return (
     <div className="mb-8">
@@ -141,7 +147,7 @@ export const IndexProfile = () => {
           variant="red"
           onClick={async () => {
             await logout();
-            navigate("/welcome");
+            navigate("/");
             queryClient.invalidateQueries({
               queryKey: ["challenges"],
             });

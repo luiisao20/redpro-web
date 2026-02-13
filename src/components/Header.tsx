@@ -1,5 +1,4 @@
 import { MdOutlinePerson } from "react-icons/md";
-import { FaRegBell } from "react-icons/fa";
 import type { UserData } from "../interfaces/interface";
 import { useNavigate } from "react-router";
 
@@ -22,9 +21,9 @@ export const Header = ({ user }: Props) => {
         >
           <MdOutlinePerson size={30} />
         </button>
-        <button className="rounded-full border-2 py-1 px-2 cursor-pointer hover:opacity-60">
+        {/* <button className="rounded-full border-2 py-1 px-2 cursor-pointer hover:opacity-60">
           <FaRegBell size={24} />
-        </button>
+        </button> */}
       </div>
     </div>
   );

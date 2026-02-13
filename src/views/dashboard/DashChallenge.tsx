@@ -5,10 +5,13 @@ import { useChallenges } from "../../presentation/userData/useChallenges";
 import type { Challenge } from "../../interfaces/interface";
 import { ChallengeCard } from "../../components/Cards";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { GoBackButton } from "../../components/Button";
+import { useNavigate } from "react-router";
 
 export const DashChallenge = () => {
   const [searchFilter, setSearchFilter] = useState("");
   const [challengesList, setChallengesList] = useState<Challenge[]>([]);
+  const navigate = useNavigate();
 
   const { user } = useAuthStore();
 
@@ -25,7 +28,10 @@ export const DashChallenge = () => {
   }, [challengesQuery.data]);
 
   return (
-    <div className="mt-4 mb-10">
+    <div className="relative mt-4 mb-10">
+      <div className="absolute -top-6 left-2">
+        <GoBackButton onClick={() => navigate(-1)} />
+      </div>
       <div className="mx-6 flex flex-col gap-6 mb-6">
         <h2 className="text-center text-2xl font-bold">Retos Destacados</h2>
         <div className="relative">

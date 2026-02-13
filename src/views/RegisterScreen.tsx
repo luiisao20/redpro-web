@@ -8,6 +8,7 @@ import { registerSchema } from "../helpers/get-errors.helper";
 import { useUser } from "../presentation/user/useUser";
 import { CustomErrorMessage } from "../components/CustomErrorMessage";
 import { useNicknameStore } from "../presentation/store/useNickStore";
+import { getCodeClientIfExsist } from "../core/database/users/get-code-cliente-if-exists.action";
 
 export const RegisterScreen = () => {
   const navigate = useNavigate();
@@ -35,6 +36,14 @@ export const RegisterScreen = () => {
           initialValues={{ ...newUser, terms: false }}
           validationSchema={registerSchema}
           onSubmit={async (formLike, { setSubmitting }) => {
+            const resp = await getCodeClientIfExsist(formLike.code);
+            if (resp) {
+              alert(
+                `Este código de cliente ya existe en la base de datos ${formLike.code}, por favor escribe un código válido`,
+              );
+              return;
+            }
+
             await register(formLike);
             try {
               await userMutation.mutateAsync({

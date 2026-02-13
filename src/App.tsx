@@ -20,6 +20,11 @@ function App() {
       status === "unauthenticated"
     )
       navigate("/");
+    else if (
+      ["/", "/welcome", "/login", "/register"].includes(location.pathname) &&
+      status === "authenticated"
+    )
+      navigate("/dashboard/home", { replace: true });
   }, [status, navigate]);
 
   return (

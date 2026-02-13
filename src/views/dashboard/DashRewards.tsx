@@ -6,12 +6,15 @@ import type { Product, UserData } from "../../interfaces/interface";
 import { useRewards } from "../../presentation/userData/useRewards";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { RewardCard } from "../../components/Cards";
+import { GoBackButton } from "../../components/Button";
+import { useNavigate } from "react-router";
 
 export const DashRewards = () => {
   const [searchFilter, setSearchFilter] = useState<string>("");
   const [filter, setFilter] = useState<string>("");
   const [userData, setUserData] = useState<UserData>();
   const [rewardsList, setRewardsList] = useState<Product[]>([]);
+  const navigate = useNavigate();
 
   const { user } = useAuthStore();
 
@@ -34,7 +37,10 @@ export const DashRewards = () => {
   }, [rewardsQuery.data]);
 
   return (
-    <div className="mt-4 mb-10">
+    <div className="relative mt-4 mb-10">
+      <div className="absolute -top-6 left-2">
+        <GoBackButton onClick={() => navigate(-1)} />
+      </div>
       <div className="flex flex-col gap-6 px-6 mb-6">
         <h2 className="text-center text-2xl font-bold">Catálogo de premios</h2>
         <div className="relative">

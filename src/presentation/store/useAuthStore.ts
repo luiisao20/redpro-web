@@ -112,7 +112,14 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
   register: async (data: NewUser) => {
     set({ loading: true });
-    const email = `${data.name.replaceAll(" ", "")}.${data.code}@yopmail.com`;
+    const cleanName = data.name
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replaceAll(" ", "")
+      .toLowerCase();
+
+      console.log(cleanName);
+    const email = `${cleanName}.${data.code}@yopmail.com`;
     try {
       const res = await registerAction(email, data.password, data.code);
       return get().changeStatus(res?.session, res?.user);

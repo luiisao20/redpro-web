@@ -16,8 +16,6 @@ export const registerAction = async (
   if (errorDb) {
     throw new Error(`Ha ocurrido un error inesperado: ${errorDb.message}`);
   }
-  console.log(dataDb);
-  
 
   if (dataDb.length === 0) {
     throw new Error("¡El código de cliente está incorrecto!");

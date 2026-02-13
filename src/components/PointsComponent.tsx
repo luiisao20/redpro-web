@@ -22,10 +22,10 @@ export const PointsComponent = ({ id, points, transactions }: Props) => {
         )}
       </div>
       <p className="text-buttonDark font-medium text-xl">
-        <span className="font-bold">{points}</span> Puntos
+        <span className="font-bold">{new Intl.NumberFormat("fr-FR").format(points)}</span> Puntos
       </p>
       <p className="text-xs text-buttonDark font-medium">
-        Tus puntos vencen en 5 días
+        ¡Bienvenido! Te regalamos tus primeros 250 puntos 🎉
       </p>
     </div>
   );

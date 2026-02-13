@@ -36,31 +36,36 @@ export const ChallengeIndex = () => {
         <img src={challengeData?.url} alt="" className="rounded-2xl" />
         <div>
           <p className="text-textGreen text-xl">
-            <span className="font-semibold">{challengeData?.points}</span>{" "}
+            <span className="font-semibold">
+              {new Intl.NumberFormat("fr-FR").format(challengeData?.points!)}
+            </span>{" "}
             Puntos
           </p>
           <p className="text-link">
-            Te quedan {challengeData?.leftDays} para completar este reto
+            Te quedan {challengeData?.leftDays} dias para completar este reto
           </p>
         </div>
         <h2 className="font-semibold">Mecánica</h2>
-        <p>{challengeData?.description}</p>
-        <h2 className="font-semibold">Producto foco</h2>
-        {challengeData?.products &&
-          challengeData.products.map((item) => (
-            <div key={item.id}>
-              <div className="border border-gray/60 flex items-center rounded-2xl">
-                <img src={item.url} alt="" className="h-30 w-30" />
-                <div>
-                  <p className="font-semibold text-xs">{item.name}</p>
-                  <p className="text-xs">
-                    <span className="font-semibold">COD: </span>
-                    {item.id}
-                  </p>
+        <p className="font-thin text-sm text-justify">{challengeData?.description}</p>
+        {(challengeData?.products ?? []).length > 0 && (
+          <>
+            <h2 className="font-semibold">Producto foco</h2>
+            {challengeData?.products?.map((item) => (
+              <div key={item.id}>
+                <div className="border border-gray/60 flex items-center rounded-2xl">
+                  <img src={item.url} alt="" className="h-30 w-30" />
+                  <div>
+                    <p className="font-semibold text-xs">{item.name}</p>
+                    <p className="text-xs">
+                      <span className="font-semibold">COD: </span>
+                      {item.id}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </>
+        )}
         {challengeData?.isAccepted ? (
           <div>
             <h2 className="font-semibold">Tu avance</h2>
@@ -72,7 +77,9 @@ export const ChallengeIndex = () => {
                   style={{ width: `${challengeData.progress}%` }}
                 ></div>
               </div>
-              <p className="text-[10px] self-end">{challengeData.progress}% de 100%</p>
+              <p className="text-[10px] self-end">
+                {challengeData.progress}% de 100%
+              </p>
             </div>
           </div>
         ) : (

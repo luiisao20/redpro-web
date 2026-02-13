@@ -9,6 +9,7 @@ export const insertNewUser = async (
     id: userId,
     full_name: name,
     store_id: code,
+    points: 250,
   });
 
   if (error) throw new Error(error.message);

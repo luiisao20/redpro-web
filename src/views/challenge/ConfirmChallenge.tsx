@@ -38,7 +38,7 @@ export const ConfirmChallenge = () => {
     {
       icon: <FiGift size={18} color={Colors.tabs} />,
       title: "Recompensa",
-      data: `${challengeData?.points} Puntos`,
+      data: `${new Intl.NumberFormat("fr-FR").format(challengeData?.points!)} Puntos`,
     },
     {
       icon: <LuCalendar size={18} color={Colors.tabs} />,
@@ -77,7 +77,6 @@ export const ConfirmChallenge = () => {
       <GoBackButton onClick={() => navigate(-1)} />
       <div className="flex gap-6 items-center place-self-center mb-8">
         <RedProLogo />
-        <h2 className="font-bold text-[2.5rem]">RedPro</h2>
       </div>
       <div className="px-6 flex flex-col gap-6">
         <h2 className="font-bold text-center">

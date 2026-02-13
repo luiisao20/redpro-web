@@ -47,7 +47,7 @@ export const ChallengeCard = ({ item, half }: ChallengeComponent) => {
           <p
             className={`text-buttonDark font-medium border border-gray px-2 rounded-xl ${half ? "text-xs" : "text-sm"}`}
           >
-            {item.points} Puntos
+            {new Intl.NumberFormat("fr-FR").format(item.points)} Puntos
           </p>
           <p className="text-xs text-red-500">Te quedan {item.leftDays} dias</p>
         </div>
@@ -114,7 +114,8 @@ export const RewardCard = ({
         )}
 
         <p className="text-pointsGreen text-sm truncate">
-          <span className="font-bold">{points}</span> puntos
+          <span className="font-bold">{new Intl.NumberFormat("fr-FR").format(points)}</span>{" "}
+          puntos
         </p>
 
         <button

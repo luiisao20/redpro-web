@@ -57,6 +57,10 @@ export const RewardIndex = () => {
     navigate("/dashboard/home", { replace: true });
   };
 
+  if (rewardQuery.isLoading) {
+    return;
+  }
+
   return (
     <>
       <div className="mb-10">
@@ -76,13 +80,15 @@ export const RewardIndex = () => {
             alt=""
             className="rounded-2xl h-50 place-self-center"
           />
+          <p className="font-thin text-sm text-justify">{dataReward?.description}</p>
           {userData?.points! >= dataReward?.points! ? (
             <div className="flex flex-col space-y-2">
               <p>Tienes los puntos requeridos para este canje.</p>
               <p>Puedes reclamarlo ahora mismo</p>
               <h2 className="font-semibold ml-2">Puntos requeridos</h2>
               <p className="font-semibold text-orange ml-2 border border-orange place-self-start px-6 py-2 rounded-xl shadow-md/40 mb-8">
-                {dataReward?.points} puntos
+                {new Intl.NumberFormat("fr-FR").format(dataReward?.points!)}{" "}
+                puntos
               </p>
               <Button text="Canjea ahora" onClick={() => setOpenModal(true)} />
             </div>

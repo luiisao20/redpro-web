@@ -26,8 +26,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Routes>
         <Route element={<App />}>
-          <Route index element={<InitScreen />} />
-          <Route path="welcome" element={<WelcomeScreen />} />
+          <Route index element={<WelcomeScreen />} />
+          <Route path="welcome" element={<InitScreen />} />
           <Route path="login" element={<LoginScreen />} />
           <Route path="register" element={<RegisterScreen />} />
           <Route path="onboarding" element={<OnboardingScreen />} />

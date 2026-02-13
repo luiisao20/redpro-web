@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "../components/Button";
+import { Button, GoBackButton } from "../components/Button";
 import { useSwipeable } from "react-swipeable";
 import { mockOnboarding } from "../helpers/examples";
 import { useNavigate } from "react-router";
@@ -7,10 +7,14 @@ import { useAuthStore } from "../presentation/store/useAuthStore";
 import { useNicknameStore } from "../presentation/store/useNickStore";
 
 export const InitScreen = () => {
+  const regex = /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s'-]+$/;
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
   const [nickName, setNickName] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({
+    show: false,
+    message: "",
+  });
 
   const { status } = useAuthStore();
   const { setNickname } = useNicknameStore();
@@ -32,7 +36,8 @@ export const InitScreen = () => {
   }, []);
 
   return (
-    <div {...handlers} className="overflow-hidden w-full">
+    <div {...handlers} className="overflow-hidden w-full relative">
+      <GoBackButton onClick={() => navigate(-1)} />
       <div
         className="flex transition-transform duration-300 ease-out"
         style={{
@@ -45,7 +50,7 @@ export const InitScreen = () => {
             className="min-w-full flex flex-col items-center px-5 gap-8"
           >
             <img src={item.image} alt={item.title} className="h-64 w-64" />
-            <h2 className="font-semibold text-2xl">{item.title}</h2>
+            <h2 className="font-semibold text-2xl text-center">{item.title}</h2>
             <p className="text-text text-base text-center">
               {item.description}
             </p>
@@ -61,7 +66,18 @@ export const InitScreen = () => {
               onClick={() => {
                 if (index === indexFinal) {
                   if (nickName.length < 4) {
-                    setError(true);
+                    setError({
+                      show: true,
+                      message: "¡El nombre está muy corto!",
+                    });
+                    return;
+                  }
+
+                  if (!regex.test(nickName)) {
+                    setError({
+                      show: true,
+                      message: "El nombre sólo puede contener letras",
+                    });
                     return;
                   }
                   navigate("/register");
@@ -75,7 +91,7 @@ export const InitScreen = () => {
             />
             {error && (
               <p className="text-red-500 text-sm my-1 ml-2">
-                ¡El nombre está muy corto!
+                {error.message}
               </p>
             )}
           </div>
