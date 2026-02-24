@@ -40,9 +40,10 @@ export const DashHome = () => {
     rewards: [],
   });
 
-  const { user } = useAuthStore();
+  const { user, logout } = useAuthStore();
 
   const { userQuery } = useUser(user?.id);
+
   const { bannersQuery } = useBanners(userData?.code);
   const { challengesQuery } = useChallenges(user?.id);
   const { rewardsQuery } = useRewards({
@@ -158,6 +159,22 @@ export const DashHome = () => {
       document.removeEventListener("click", handleClick);
     };
   }, []);
+
+  useEffect(() => {
+    if (userQuery.isError) {
+      // 1. (Opcional) Limpiar estados locales o de persistencia
+      localStorage.removeItem("tutorial");
+
+      // 2. Limpiar el Store de Auth
+      logout();
+
+      // 3. Redirigir al Login o Landing
+      navigate("/login", { replace: true });
+
+      // 4. Mostrar una alerta (opcional)
+      alert("Tu sesión ha expirado o hubo un error crítico.");
+    }
+  }, [userQuery.isError, navigate, logout]);
 
   // User data
   useEffect(() => {

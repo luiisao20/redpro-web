@@ -6,8 +6,6 @@ export const registerAction = async (
   password: string,
   code: string,
 ): Promise<{ user: User; session: Session } | null> => {
-  console.log(code);
-  
   const { data: dataDb, error: errorDb } = await supabase
     .from("clients_codes")
     .select()

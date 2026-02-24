@@ -1,11 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { IoPersonCircleSharp } from "react-icons/io5";
-import { MdOutlinePerson } from "react-icons/md";
-import { PiStarFour } from "react-icons/pi";
-import { CgPassword } from "react-icons/cg";
 import { TbTicket } from "react-icons/tb";
-import { HiOutlineFire } from "react-icons/hi";
-import { FaRegCommentDots } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 
 import type { UserData, ProfileInfo } from "../../interfaces/interface";
@@ -64,34 +59,34 @@ export const IndexProfile = () => {
   ];
 
   const mockUserInfo: UserInfo[] = [
-    {
-      icon: <MdOutlinePerson color={Colors.tabs} size={26} />,
-      title: "Codigo de cliente",
-      subtitle: `${userData?.code}`,
-    },
-    {
-      icon: <PiStarFour color={Colors.tabs} size={26} />,
-      title: "Puntos actuales",
-      subtitle: `${userData?.points} Puntos`,
-    },
-    {
-      icon: <CgPassword color={Colors.tabs} size={26} />,
-      title: "Actualizar información",
-    },
+    // {
+    //   icon: <MdOutlinePerson color={Colors.tabs} size={26} />,
+    //   title: "Codigo de cliente",
+    //   subtitle: `${userData?.code}`,
+    // },
+    // {
+    //   icon: <PiStarFour color={Colors.tabs} size={26} />,
+    //   title: "Puntos actuales",
+    //   subtitle: `${userData?.points} Puntos`,
+    // },
+    // {
+    //   icon: <CgPassword color={Colors.tabs} size={26} />,
+    //   title: "Actualizar información",
+    // },
     {
       icon: <TbTicket color={Colors.tabs} size={26} />,
       title: "Historial de canjes",
       router: "transactions",
     },
-    {
-      icon: <HiOutlineFire color={Colors.tabs} size={26} />,
-      title: "Retos completados",
-      subtitle: "14",
-    },
-    {
-      icon: <FaRegCommentDots color={Colors.tabs} size={26} />,
-      title: "Preguntas frecuentes",
-    },
+    // {
+    //   icon: <HiOutlineFire color={Colors.tabs} size={26} />,
+    //   title: "Retos completados",
+    //   subtitle: "14",
+    // },
+    // {
+    //   icon: <FaRegCommentDots color={Colors.tabs} size={26} />,
+    //   title: "Preguntas frecuentes",
+    // },
   ];
 
   useEffect(() => {
@@ -103,7 +98,7 @@ export const IndexProfile = () => {
   }, [profileQuery.data]);
 
   return (
-    <div className="mb-8">
+    <div className="relative min-h-screen">
       <GoBackButton onClick={() => navigate(-1)} />
       <div className="flex flex-col justify-center items-center relative px-6 gap-4">
         <div className="flex flex-col items-center">
@@ -130,7 +125,9 @@ export const IndexProfile = () => {
         <div className="flex flex-col w-full border border-textGreen rounded-2xl p-6 gap-4">
           {mockUserInfo.map((item, index) => (
             <a
-              onClick={() => navigate(`${item.router}`)}
+              onClick={() => {
+                if (item.router) navigate(`${item.router}`);
+              }}
               key={index}
               className="flex flex-row justify-between items-center active:opacity-60 gap-6"
             >
@@ -142,6 +139,8 @@ export const IndexProfile = () => {
             </a>
           ))}
         </div>
+      </div>
+      <div className="w-full absolute bottom-10 px-6">
         <Button
           text="Cerrar sesión"
           variant="red"

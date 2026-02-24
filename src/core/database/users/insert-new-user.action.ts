@@ -12,5 +12,11 @@ export const insertNewUser = async (
     points: 250,
   });
 
-  if (error) throw new Error(error.message);
+  const { error: errorCode } = await supabase
+    .from("clients_codes")
+    .update({ is_registered: true })
+    .eq("store_id", code);
+
+  if (error || errorCode)
+    throw new Error(error ? error.message : errorCode?.message);
 };

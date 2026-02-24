@@ -25,6 +25,12 @@ export const RegisterScreen = () => {
     code: "",
   };
 
+  // useEffect(() => {
+  //   if (userMutation.isError) {
+  //     logout();
+  //   }
+  // }, [userMutation.isError]);
+
   return (
     <div className="relative grid gap-4 place-items-center">
       <GoBackButton onClick={() => navigate(-1)} />
@@ -39,7 +45,7 @@ export const RegisterScreen = () => {
             const resp = await getCodeClientIfExsist(formLike.code);
             if (resp) {
               alert(
-                `Este código de cliente ya existe en la base de datos ${formLike.code}, por favor escribe un código válido`,
+                "Este cliente ya se encuentra registrado. Por favor, inicie sesión.",
               );
               return;
             }
@@ -139,7 +145,7 @@ export const RegisterScreen = () => {
                   target="_blank"
                   className="text-xs"
                 >
-                  Política de privacidad y Protección de datos
+                  Aceptar política de privacidad y protección de datos
                 </a>
               </div>
               <CustomErrorMessage
@@ -147,7 +153,7 @@ export const RegisterScreen = () => {
                 errors={errors}
                 touched={touched}
               />
-              <Button type="submit" text="Continuar" disabled={isSubmitting} />
+              <Button type="submit" text="Continuar" loading={isSubmitting} />
             </form>
           )}
         </Formik>

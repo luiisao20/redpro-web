@@ -14,6 +14,7 @@ const opciones: Intl.DateTimeFormatOptions = {
   year: "numeric",
   month: "short",
   day: "numeric",
+  timeZone: "UTC",
   hour12: false,
 };
 

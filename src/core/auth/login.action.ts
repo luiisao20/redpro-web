@@ -14,7 +14,8 @@ export const loginAction = async (
     throw new Error(`Ocurrió un error inesperado: ${errorDb.message}`);
   }
 
-  if (dataDb.length === 0) throw new Error("El código de cliente está incorrecto");
+  if (dataDb.length === 0)
+    throw new Error("El cliente no se encuentra registrado");
 
   const email = dataDb[0].email;
 
@@ -27,7 +28,7 @@ export const loginAction = async (
   const user: User | null = data.user;
 
   if (error || !session || !user) {
-    throw new Error(error?.message);
+    throw new Error("La contraseña es incorrecta");
   }
 
   return { user, session };
