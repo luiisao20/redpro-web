@@ -37,15 +37,13 @@ export const DashboardIndex = () => {
           <LuTicket size={22} />
           <p className="font-thin text-xs">Canjear</p>
         </NavLink>
-        <NavLink
-          to="/dashboard/shop"
-          className={({ isActive }) =>
-            `text-dotStyle flex flex-col items-center space-y-2 ${isActive && "text-white"}`
-          }
+        <a
+          href="tel:+593980042037"
+          className="text-dotStyle flex flex-col items-center space-y-2"
         >
           <PiShoppingCart size={22} />
           <p className="font-thin text-xs">Comprar</p>
-        </NavLink>
+        </a>
       </footer>
     </div>
   );
