@@ -42,11 +42,17 @@ export const ChallengeIndex = () => {
             Puntos
           </p>
           <p className="text-link">
-            Te quedan {challengeData?.leftDays} dias para completar este reto
+            {challengeData?.leftDays! > 0
+              ? `Te quedan ${challengeData?.leftDays} dias para completar este reto`
+              : challengeData?.leftDays! < 0
+                ? "Reto vencido"
+                : "Último día del reto"}
           </p>
         </div>
         <h2 className="font-semibold">Mecánica</h2>
-        <p className="font-thin text-sm text-justify">{challengeData?.description}</p>
+        <p className="font-thin text-sm text-justify">
+          {challengeData?.description}
+        </p>
         {(challengeData?.products ?? []).length > 0 && (
           <>
             <h2 className="font-semibold">Producto foco</h2>
@@ -83,10 +89,15 @@ export const ChallengeIndex = () => {
             </div>
           </div>
         ) : (
-          <Button
-            text="Aceptar el reto"
-            onClick={() => navigate(`/confirm/challenge/${challengeData?.id}`)}
-          />
+          challengeData?.leftDays! >= 0 && (
+            <Button
+              text="Aceptar el reto"
+              onClick={() => {
+                if (challengeData?.leftDays! >= 0)
+                  navigate(`/confirm/challenge/${challengeData?.id}`);
+              }}
+            />
+          )
         )}
       </div>
     </div>

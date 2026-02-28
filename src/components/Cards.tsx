@@ -9,11 +9,11 @@ interface BannerComponent {
 
 export const BannerCard = ({ item }: BannerComponent) => {
   return (
-    <div key={item.id} className="min-w-full mr-4">
+    <div key={item.id} className="min-w-full">
       <img
         src={item.url}
         alt={item.title}
-        className="w-full h-32 object-cover rounded-xl shadow-md"
+        className="h-36 w-full object-fill rounded-xl shadow-md"
       />
     </div>
   );
@@ -49,7 +49,13 @@ export const ChallengeCard = ({ item, half }: ChallengeComponent) => {
           >
             {new Intl.NumberFormat("fr-FR").format(item.points)} Puntos
           </p>
-          <p className="text-xs text-red-500">Te quedan {item.leftDays} dias</p>
+          <p className="text-xs text-red-500">
+            {item.leftDays > 0
+              ? `Te quedan ${item.leftDays} dias`
+              : item.leftDays < 0
+                ? "Reto vencido"
+                : "Último día"}
+          </p>
         </div>
       </div>
       <img
@@ -114,7 +120,9 @@ export const RewardCard = ({
         )}
 
         <p className="text-pointsGreen text-sm truncate">
-          <span className="font-bold">{new Intl.NumberFormat("fr-FR").format(points)}</span>{" "}
+          <span className="font-bold">
+            {new Intl.NumberFormat("fr-FR").format(points)}
+          </span>{" "}
           puntos
         </p>
 

@@ -189,10 +189,21 @@ export const DashHome = () => {
     <div className="mb-30 relative">
       <Header user={userData} />
       <PointsComponent points={userData.points} id="points" />
-      <Carousel id="banners" hideDots data={clientData.banners}>
-        {clientData.banners.map((item, index) => (
-          <BannerCard key={index} item={item} />
-        ))}
+      <Carousel
+        classAdded="mr-6"
+        autoScroll
+        autoScrollInterval={3000}
+        id="banners"
+        hideDots
+        data={clientData.banners}
+      >
+        <div className="flex">
+          {clientData.banners.map((item, index) => (
+            <div key={index} className="first:pl-0 pl-2 min-w-full">
+              <BannerCard item={item} />
+            </div>
+          ))}
+        </div>
       </Carousel>
       <div className="flex mx-6 justify-between text-xl">
         <h2 className="font-bold">Retos destacados</h2>
