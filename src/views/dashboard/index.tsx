@@ -3,8 +3,32 @@ import { IoHome } from "react-icons/io5";
 import { LuTicket } from "react-icons/lu";
 import { HiOutlineFire } from "react-icons/hi2";
 import { PiShoppingCart } from "react-icons/pi";
+import { useAuthStore } from "../../presentation/store/useAuthStore";
+import { useUser } from "../../presentation/user/useUser";
+import { useMacrochannel } from "../../presentation/userData/useMarochannel";
+import { useEffect, useState } from "react";
+import type { UserData } from "../../interfaces/interface";
 
 export const DashboardIndex = () => {
+  const [macroChannel, setMacroChannel] = useState<string>();
+  const [userData, setUserData] = useState<UserData>();
+
+  const { user } = useAuthStore();
+
+  const { userQuery } = useUser(user?.id);
+  const { macrochannelQuery } = useMacrochannel(
+    user?.id,
+    userData?.macroChannel,
+  );
+
+  useEffect(() => {
+    if (macrochannelQuery.data) setMacroChannel(macrochannelQuery.data);
+  }, [macrochannelQuery.data]);
+
+  useEffect(() => {
+    if (userQuery.data) setUserData(userQuery.data);
+  }, [userQuery.data]);
+
   return (
     <div>
       <Outlet />
@@ -38,7 +62,11 @@ export const DashboardIndex = () => {
           <p className="font-thin text-xs">Canjear</p>
         </NavLink>
         <a
-          href="tel:+593980042037"
+          href={
+            userData?.macroChannel === 1
+              ? `tel:+593${macroChannel}`
+              : `https://wa.me/593${macroChannel}`
+          }
           className="text-dotStyle flex flex-col items-center space-y-2"
         >
           <PiShoppingCart size={22} />

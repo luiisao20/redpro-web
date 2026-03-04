@@ -64,6 +64,7 @@ export interface UserData {
   code: string;
   points: number;
   maxPoints?: number;
+  macroChannel?: number;
 }
 
 export interface TransactionHistory {
