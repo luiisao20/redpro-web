@@ -7,12 +7,15 @@ export const getChallenges = async (
   offset = 0,
   id: string,
   searchFilter?: string,
+  activeFilter?: string,
 ): Promise<Challenge[]> => {
+  const active = activeFilter === "Activos" || activeFilter === "";
   const challenges: Challenge[] = [];
   const { data, error } = await supabase
     .rpc("get_clients_challenges", {
       id_client: id,
       search_text: searchFilter ?? "",
+      filter_active: active
     })
     .range(offset, offset + limit - 1)
     .order("name", { ascending: true });

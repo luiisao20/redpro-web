@@ -214,11 +214,17 @@ export const DashHome = () => {
           Ver todos
         </a>
       </div>
-      <Carousel id="challenges" width={256} data={clientData.challenges}>
-        {clientData.challenges.map((item, index) => (
-          <ChallengeCard key={index} item={item} />
-        ))}
-      </Carousel>
+      {clientData.challenges.length > 0 ? (
+        <Carousel id="challenges" width={256} data={clientData.challenges}>
+          {clientData.challenges.map((item, index) => (
+            <ChallengeCard key={index} item={item} />
+          ))}
+        </Carousel>
+      ) : (
+        <p className="text-center font-semibold text-gray text-lg my-16 mx-6">
+          No existen retos disponibles en este momento
+        </p>
+      )}
       <div className="flex mx-6 justify-between text-xl mt-6">
         <h2 className="font-bold">Canjea tus puntos</h2>
         <a

@@ -28,7 +28,7 @@ export const FiltersComponent = ({
   });
   const [mainList, setMainList] = useState<string[]>([]);
 
-  const list: string[] = ["Activos", "Próximos"];
+  const list: string[] = ["Activos", "Inactivos"];
 
   const rewardsList: string[] = ["Canjeables", "No canjeables"];
   const transactionsList: string[] = ["Canjeados", "Obtenidos"];
@@ -36,7 +36,7 @@ export const FiltersComponent = ({
 
   useEffect(() => {
     if (rewards) setMainList(rewardsList);
-    else if (transactions) setMainList(transactionsList)
+    else if (transactions) setMainList(transactionsList);
     else setMainList(challengesList);
   }, []);
 
@@ -65,7 +65,7 @@ export const FiltersComponent = ({
               className="active:opacity-60"
               onClick={() => {
                 setFilterList({ show: false, text: "" });
-                if (rewards || transactions) onCleanFilter();
+                onCleanFilter();
               }}
             />
           </div>
@@ -78,7 +78,10 @@ export const FiltersComponent = ({
               {list.map((item, index) => (
                 <button
                   className="flex justify-between active:opacity-60"
-                  onClick={() => setSubFilter({ show: true, text: item })}
+                  onClick={() => {
+                    onSetFilter(item);
+                    setSubFilter({ show: true, text: item });
+                  }}
                   key={index}
                 >
                   <p>{item}</p>
@@ -89,7 +92,10 @@ export const FiltersComponent = ({
           ) : (
             <ButtonSubFilter
               title={subFilter.text}
-              onClick={() => setSubFilter({ show: false, text: "" })}
+              onClick={() => {
+                setSubFilter({ show: false, text: "" });
+                onCleanFilter();
+              }}
             />
           )}
         </div>

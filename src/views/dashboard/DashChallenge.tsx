@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 export const DashChallenge = () => {
   const [searchFilter, setSearchFilter] = useState("");
   const [challengesList, setChallengesList] = useState<Challenge[]>([]);
+  const [activeFilter, setActiveFilter] = useState("");
   const navigate = useNavigate();
 
   const { user } = useAuthStore();
@@ -18,6 +19,7 @@ export const DashChallenge = () => {
   const { challengesQuery, nextPage, loadNextPage } = useChallenges(
     user?.id,
     searchFilter,
+    activeFilter,
   );
 
   useEffect(() => {
@@ -34,8 +36,9 @@ export const DashChallenge = () => {
       </div>
       <div className="mx-6 flex flex-col gap-6 mb-6">
         <h2 className="text-center text-2xl font-bold">Retos Destacados</h2>
+        {activeFilter}
         <div className="relative">
-          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <div className="absolute inset-y-0 inset-s-0 flex items-center ps-3 pointer-events-none">
             <svg
               className="w-4 h-4 text-gray-500"
               aria-hidden="true"
@@ -45,9 +48,9 @@ export const DashChallenge = () => {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
               />
             </svg>
@@ -62,20 +65,29 @@ export const DashChallenge = () => {
             onChange={(e) => setSearchFilter(e.target.value)}
           />
         </div>
-        <FiltersComponent />
+        <FiltersComponent
+          onSetFilter={setActiveFilter}
+          onCleanFilter={() => setActiveFilter("")}
+        />
       </div>
-      <InfiniteScroll
-        dataLength={challengesList.length}
-        next={loadNextPage}
-        hasMore={!!nextPage}
-        loader={<p>Cargando más retos...</p>}
-      >
-        <div className="grid grid-cols-2 gap-4 mb-10 px-6">
-          {challengesList.map((item, index) => (
-            <ChallengeCard item={item} key={index} half />
-          ))}
-        </div>
-      </InfiniteScroll>
+      {challengesList.length > 0 ? (
+        <InfiniteScroll
+          dataLength={challengesList.length}
+          next={loadNextPage}
+          hasMore={!!nextPage}
+          loader={<p>Cargando más retos...</p>}
+        >
+          <div className="grid grid-cols-2 gap-4 mb-10 px-6">
+            {challengesList.map((item, index) => (
+              <ChallengeCard item={item} key={index} half />
+            ))}
+          </div>
+        </InfiniteScroll>
+      ) : (
+        <p className="text-center font-regular text-gray text-lg my-16 mx-6">
+          No existen retos disponibles en este momento
+        </p>
+      )}
     </div>
   );
 };
