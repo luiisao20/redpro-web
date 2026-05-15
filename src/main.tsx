@@ -18,6 +18,8 @@ import { RewardIndex } from "./views/reward";
 import { ConfirmChallenge } from "./views/challenge/ConfirmChallenge";
 import { AcceptChallenge } from "./views/challenge/AcceptChallenge";
 import { TransactionsScreen } from "./views/profile/TransactionsScreen";
+import { NewsScreen } from "./views/news/NewsScreen";
+import { NewsItem } from "./views/news/NewsItem";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +31,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route index element={<WelcomeScreen />} />
           <Route path="welcome" element={<InitScreen />} />
           <Route path="login" element={<LoginScreen />} />
+          <Route path="news" element={<NewsScreen />} />
+          <Route path="newsItem/:id" element={<NewsItem />} />
           <Route path="register" element={<RegisterScreen />} />
           <Route path="onboarding" element={<OnboardingScreen />} />
           <Route path="profile" element={<IndexProfile />} />

@@ -12,7 +12,7 @@ export const getChallenges = async (
   const active = activeFilter === "Activos" || activeFilter === "";
   const challenges: Challenge[] = [];
   const { data, error } = await supabase
-    .rpc("get_clients_challenges", {
+    .rpc("get_clients_challenges_test", {
       id_client: id,
       search_text: searchFilter ?? "",
       filter_active: active

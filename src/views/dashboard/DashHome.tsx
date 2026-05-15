@@ -8,13 +8,13 @@ import {
 import { Carousel } from "../../components/Carousel";
 import { Header } from "../../components/Header";
 import { PointsComponent } from "../../components/PointsComponent";
-import { newsMock } from "../../helpers/examples";
 import { driver, type DriveStep } from "driver.js";
 import "driver.js/dist/driver.css";
 import { useNavigate } from "react-router";
 import type {
   Banner,
   Challenge,
+  News,
   Product,
   UserData,
 } from "../../interfaces/interface";
@@ -24,6 +24,7 @@ import { LoaderComponent } from "../../components/LoaderComponent";
 import { useBanners } from "../../presentation/userData/useBanners";
 import { useChallenges } from "../../presentation/userData/useChallenges";
 import { useRewards } from "../../presentation/userData/useRewards";
+import { useNews } from "../../presentation/news/useNews";
 
 interface ClientData {
   banners: Banner[];
@@ -39,18 +40,20 @@ export const DashHome = () => {
     challenges: [],
     rewards: [],
   });
+  const [newsList, setNewsList] = useState<News[]>([]);
 
   const { user, logout } = useAuthStore();
 
   const { userQuery } = useUser(user?.id);
 
   const { bannersQuery } = useBanners(userData?.code);
-  const { challengesQuery } = useChallenges(user?.id);
+  const { challengesQuery } = useChallenges(user?.id, "", "");
   const { rewardsQuery } = useRewards({
     filter: "",
     codeClient: userData?.code,
     maxPoints: userData?.maxPoints,
   });
+  const { newsQuery } = useNews("");
 
   const steps: DriveStep[] = [
     {
@@ -116,6 +119,11 @@ export const DashHome = () => {
     if (bannersQuery.data)
       setClientData((prev) => ({ ...prev, banners: bannersQuery.data }));
   }, [bannersQuery.data]);
+
+  useEffect(() => {
+    if (newsQuery.data)
+      setNewsList(newsQuery.data.pages.flatMap((page) => page) ?? []);
+  }, [newsQuery.data]);
 
   useEffect(() => {
     if (challengesQuery.data)
@@ -245,12 +253,15 @@ export const DashHome = () => {
       </Carousel>
       <div className="flex mx-6 justify-between text-xl mt-6">
         <h2 className="font-bold">Noticias</h2>
-        <a className="font-thin hover:underline hover:underline-offset-2 cursor-pointer">
+        <a
+          onClick={() => navigate("/news")}
+          className="font-thin hover:underline hover:underline-offset-2 cursor-pointer"
+        >
           Ver todos
         </a>
       </div>
-      <Carousel id="news" data={newsMock} width={400}>
-        {newsMock.map((item, index) => (
+      <Carousel id="news" data={newsList} width={600}>
+        {newsList.map((item, index) => (
           <NewsCard key={index} item={item} />
         ))}
       </Carousel>

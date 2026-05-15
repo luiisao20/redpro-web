@@ -42,9 +42,9 @@ export const DashRewards = () => {
         <GoBackButton onClick={() => navigate(-1)} />
       </div>
       <div className="flex flex-col gap-6 px-6 mb-6">
-        <h2 className="text-center text-2xl font-bold">Catálogo de premios</h2>
+        <h2 className="text-center text-2xl font-bold">Premios</h2>
         <div className="relative">
-          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <div className="absolute inset-y-0 inset-s-0 flex items-center ps-3 pointer-events-none">
             <svg
               className="w-4 h-4 text-gray-500"
               aria-hidden="true"

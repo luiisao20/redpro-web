@@ -146,22 +146,26 @@ export const RewardCard = ({
 
 interface NewsComponent {
   item: News;
+  half?: boolean;
 }
 
-export const NewsCard = ({ item }: NewsComponent) => {
-  const { description, image, subtitle, title } = item;
+export const NewsCard = ({ item, half }: NewsComponent) => {
+  const { description, image, title } = item;
+  const navigate = useNavigate();
   return (
-    <div className="bg-background rounded-2xl mr-4 shadow-md min-w-full flex px-4 items-center">
+    <div
+      onClick={() => navigate(`/newsItem/${item.id}`)}
+      className={`bg-background rounded-2xl mr-4 shadow-md min-w-full px-4 items-center ${half ? "" : "flex"}`}
+    >
       <img
         src={image}
         alt={title}
-        className="h-24 object-contain rounded-2xl"
+        className="h-24 object-contain rounded-2xl w-full"
         loading="lazy"
       />
 
       <div className="p-2 flex flex-col items-center gap-2">
         <h3 className="text-[12px] font-semibold capitalize">{title}</h3>
-        <p className="text-[10px]">{subtitle}</p>
         <p className="text-[10px] font-thin line-clamp-2">{description}</p>
       </div>
     </div>
