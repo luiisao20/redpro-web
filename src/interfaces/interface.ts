@@ -64,6 +64,7 @@ export interface UserData {
   points: number;
   maxPoints?: number;
   macroChannel?: number;
+  category?: `ORO` | `PLATA` | 'BRONCE';
 }
 
 export interface TransactionHistory {

@@ -25,6 +25,7 @@ import { useBanners } from "../../presentation/userData/useBanners";
 import { useChallenges } from "../../presentation/userData/useChallenges";
 import { useRewards } from "../../presentation/userData/useRewards";
 import { useNews } from "../../presentation/news/useNews";
+import {ModalInit} from "./ModalInit";
 
 interface ClientData {
   banners: Banner[];
@@ -194,77 +195,80 @@ export const DashHome = () => {
   }
 
   return (
-    <div className="mb-30 relative">
-      <Header user={userData} />
-      <PointsComponent points={userData.points} id="points" />
-      <Carousel
-        classAdded="mr-6"
-        autoScroll
-        autoScrollInterval={3000}
-        id="banners"
-        hideDots
-        data={clientData.banners}
-      >
-        <div className="flex">
-          {clientData.banners.map((item, index) => (
-            <div key={index} className="first:pl-0 pl-2 min-w-full">
-              <BannerCard item={item} />
-            </div>
-          ))}
-        </div>
-      </Carousel>
-      <div className="flex mx-6 justify-between text-xl">
-        <h2 className="font-bold">Retos destacados</h2>
-        <a
-          onClick={() => navigate("/dashboard/challenges")}
-          className="font-thin hover:underline hover:underline-offset-2 cursor-pointer"
+    <div>
+      <div className="mb-30 relative">
+        <Header user={userData} />
+        <PointsComponent points={userData.points} id="points" />
+        <Carousel
+          classAdded="mr-6"
+          autoScroll
+          autoScrollInterval={3000}
+          id="banners"
+          hideDots
+          data={clientData.banners}
         >
-          Ver todos
-        </a>
-      </div>
-      {clientData.challenges.length > 0 ? (
-        <Carousel id="challenges" width={256} data={clientData.challenges}>
-          {clientData.challenges.map((item, index) => (
-            <ChallengeCard key={index} item={item} />
+          <div className="flex">
+            {clientData.banners.map((item, index) => (
+              <div key={index} className="first:pl-0 pl-2 min-w-full">
+                <BannerCard item={item} />
+              </div>
+            ))}
+          </div>
+        </Carousel>
+        <div className="flex mx-6 justify-between text-xl">
+          <h2 className="font-bold">Retos destacados</h2>
+          <a
+            onClick={() => navigate("/dashboard/challenges")}
+            className="font-thin hover:underline hover:underline-offset-2 cursor-pointer"
+          >
+            Ver todos
+          </a>
+        </div>
+        {clientData.challenges.length > 0 ? (
+          <Carousel id="challenges" width={256} data={clientData.challenges}>
+            {clientData.challenges.map((item, index) => (
+              <ChallengeCard key={index} item={item} />
+            ))}
+          </Carousel>
+        ) : (
+          <p className="text-center font-semibold text-gray text-lg my-16 mx-6">
+            No existen retos disponibles en este momento
+          </p>
+        )}
+        <div className="flex mx-6 justify-between text-xl mt-6">
+          <h2 className="font-bold">Canjea tus puntos</h2>
+          <a
+            onClick={() => navigate("/dashboard/rewards")}
+            className="font-thin hover:underline hover:underline-offset-2 cursor-pointer"
+          >
+            Ver todos
+          </a>
+        </div>
+        <Carousel id="rewards" data={clientData.rewards} width={160}>
+          {clientData.rewards.map((item, index) => (
+            <RewardCard
+              key={index}
+              item={item}
+              canRedeem={userData.points >= item.points}
+            />
           ))}
         </Carousel>
-      ) : (
-        <p className="text-center font-semibold text-gray text-lg my-16 mx-6">
-          No existen retos disponibles en este momento
-        </p>
-      )}
-      <div className="flex mx-6 justify-between text-xl mt-6">
-        <h2 className="font-bold">Canjea tus puntos</h2>
-        <a
-          onClick={() => navigate("/dashboard/rewards")}
-          className="font-thin hover:underline hover:underline-offset-2 cursor-pointer"
-        >
-          Ver todos
-        </a>
+        <div className="flex mx-6 justify-between text-xl mt-6">
+          <h2 className="font-bold">Noticias</h2>
+          <a
+            onClick={() => navigate("/news")}
+            className="font-thin hover:underline hover:underline-offset-2 cursor-pointer"
+          >
+            Ver todos
+          </a>
+        </div>
+        <Carousel id="news" data={newsList} width={600}>
+          {newsList.map((item, index) => (
+            <NewsCard key={index} item={item} />
+          ))}
+        </Carousel>
       </div>
-      <Carousel id="rewards" data={clientData.rewards} width={160}>
-        {clientData.rewards.map((item, index) => (
-          <RewardCard
-            key={index}
-            item={item}
-            canRedeem={userData.points >= item.points}
-          />
-        ))}
-      </Carousel>
-      <div className="flex mx-6 justify-between text-xl mt-6">
-        <h2 className="font-bold">Noticias</h2>
-        <a
-          onClick={() => navigate("/news")}
-          className="font-thin hover:underline hover:underline-offset-2 cursor-pointer"
-        >
-          Ver todos
-        </a>
-      </div>
-      <Carousel id="news" data={newsList} width={600}>
-        {newsList.map((item, index) => (
-          <NewsCard key={index} item={item} />
-        ))}
-      </Carousel>
+      <ModalInit data={userData} />
     </div>
   );
 };

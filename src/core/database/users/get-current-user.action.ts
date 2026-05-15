@@ -21,7 +21,8 @@ export const getCurrentUser = async (userId: string): Promise<UserData> => {
     name: data.full_name,
     points: data.points,
     maxPoints: data.clients_codes.max_points,
-    macroChannel: data.macrochannel
+    macroChannel: data.macrochannel,
+    category: data.category,
   };
 
   return user;
